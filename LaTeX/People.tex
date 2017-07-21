@@ -42,210 +42,9 @@
 
 % Begin Document
 \begin{document}
-	
-% New Page
 \noindent \begin{tikzpicture}[outer sep=0]
 
-	% VOLDEMORT
-	\node[teamshare, fill=ForestGreen] (1) at (3.2,26.7) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (3.2,24.7) {
-		{\Huge Voledmort}
-		\titlefrom{Harry Potter Franchise}
-		\seperatordescription
-		When the game ends, you use the Avada Kadavra Curse. Everyone in your room gains the \condition{dead} condition
-		\seperatorwin
-		Green team wins if \character{Harry Potter} gains the \condition{dead} condition.
-	};
-	
-	% HARRY POTTER
-	\node[teamshare, fill=red] at (9.6,26.7) {\HUGE RED};
-	\node[cardtext, text=red] at (9.6,24.7) {
-		{\Huge Harry Potter}
-		\seperatorwin
-		Red team wins if you do not gain the \condition{dead} condition from \character{Voledmort}.
-	};
-	
-	% ******
-	\node[teamshare, fill=gray] at (16,26.7) {\HUGE GREY};
-	\node[cardtext, text=gray] at (16,24.7) {
-		{\Huge *****}
-		\seperatorwin
-		Before the last round begins, you must publically announce which team you think is going to win. If you are correct, you win. If not, you lose.
-	};
-	
-	% RED TEAM
-	\node[teamshare, fill=red] at (3.2,17.8) {\HUGE RED};
-	\node[cardtext, text=red] at (3.2,15.8) {
-		{\Huge Red Team}
-		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
-	};
-	
-	% RED TEAM
-	\node[teamshare, fill=red] at (9.6,17.8) {\HUGE RED};
-	\node[cardtext, text=red] at (9.6,15.8) {
-		{\Huge Red Team}
-		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
-	};
-	
-	% RED TEAM
-	\node[teamshare, fill=red] at (16,17.8) {\HUGE RED};
-	\node[cardtext, text=red] at (16,15.8) {
-		{\Huge Red Team}
-		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
-	};
-	
-	% GREEN TEAM
-	\node[teamshare, fill=ForestGreen] at (3.2,8.9) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (3.2,6.9) {
-		{\Huge Green Team}
-		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
-	};
-	
-	% GREEN TEAM
-	\node[teamshare, fill=ForestGreen] at (9.6,8.9) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (9.6,6.9) {
-		{\Huge Green Team}
-		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
-	};
-	
-	% GREEN TEAM
-	\node[teamshare, fill=ForestGreen] at (16,8.9) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (16,6.9) {
-		{\Huge Green Team}
-		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
-	};
-	
-	\draw (0,0) -- (19.2,0);
-	\draw (0,8.9) -- (19.2,8.9);
-	\draw (0,17.8) -- (19.2,17.8);
-	\draw (0,26.7) -- (19.2,26.7);
-	
-	\draw (0,0) -- (0,26.7);
-	\draw (6.4,0) -- (6.4,26.7);
-	\draw (12.8,0) -- (12.8,26.7);
-	\draw (19.2,0) -- (19.2,26.7);
-
-
-
-\end{tikzpicture}
-
-%Background is not my own. But courtesy of a user on BGG
-\includepdf[pages={1}, angle=90]{cardsbackground.pdf}
-\pagebreak
-
-\noindent \begin{tikzpicture}[outer sep=0]
-
-	% RED TEAM
-	\node[teamshare, fill=red] (1) at (3.2,26.7) {\HUGE RED};
-	\node[cardtext, text=red] at (3.2,24.7) {
-		{\Huge Red Team}
-		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
-	};
-	
-	% GREEN TEAM
-	\node[teamshare, fill=ForestGreen] at (9.6,26.7) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (9.6,24.7) {
-		{\Huge Green Team}
-		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
-	};
-	
-	% POLYJUICE POTATO
-	\node[teamshare, fill=gray] at (16,26.7) {\HUGE GREY};
-	\node[cardtext, text=gray] at (16,24.7) {
-		{\Huge Polyjuice (Hot Potato)}
-		\seperatoraction
-		Any player that card shares, or even color reveals, with you must immediately exchange his card for yours: You gain his card, and assume his previous role. He becomes the Hot Potato.
-		\seperatorwin
-		You can't. You always lose at the end of the game	
-	};
-	
-	% RED TEAM
-	\node[teamshare, fill=red] at (3.2,17.8) {\HUGE RED};
-	\node[cardtext, text=red] at (3.2,15.8) {
-		{\Huge Red Team}
-		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
-	};
-	
-	% RED TEAM
-	\node[teamshare, fill=red] at (9.6,17.8) {\HUGE RED};
-	\node[cardtext, text=red] at (9.6,15.8) {
-		{\Huge Red Team}
-		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
-	};
-	
-	% RED TEAM
-	\node[teamshare, fill=red] at (16,17.8) {\HUGE RED};
-	\node[cardtext, text=red] at (16,15.8) {
-		{\Huge Red Team}
-		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
-	};
-	
-	% GREEN TEAM
-	\node[teamshare, fill=ForestGreen] at (3.2,8.9) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (3.2,6.9) {
-		{\Huge Green Team}
-		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
-	};
-	
-	% GREEN TEAM
-	\node[teamshare, fill=ForestGreen] at (9.6,8.9) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (9.6,6.9) {
-		{\Huge Green Team}
-		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
-	};
-	
-	% GREEN TEAM
-	\node[teamshare, fill=ForestGreen] at (16,8.9) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (16,6.9) {
-		{\Huge Green Team}
-		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
-	};
-	
-	\draw (0,0) -- (19.2,0);
-	\draw (0,8.9) -- (19.2,8.9);
-	\draw (0,17.8) -- (19.2,17.8);
-	\draw (0,26.7) -- (19.2,26.7);
-	\draw (0,0) -- (0,26.7);
-	\draw (6.4,0) -- (6.4,26.7);
-	\draw (12.8,0) -- (12.8,26.7);
-	\draw (19.2,0) -- (19.2,26.7);
-
-\end{tikzpicture}
-
-\includepdf[pages={1}, angle=90]{cardsbackground.pdf}
-\pagebreak
-
-\noindent \begin{tikzpicture}[outer sep=0]
-
-	% GINNY WEASLEY
+	% GINNY WEASLEY (AKA PRESIDENT'S WIFE)
 	\node[teamshare, fill=gray] (1) at (3.2,26.7) {\HUGE GREY};
 	\node[cardtext, text=gray] at (3.2,24.7) {
 		{\Huge Ginny Weasley}
@@ -255,7 +54,7 @@
 		You win if you end the game in the same room as Harry Potter without Cho Chang.
 	};
 	
-	% CHO CHANG
+	% CHO CHANG (AKA PRESIDENT'S MISTRESS)
 	\node[teamshare, fill=gray] at (9.6,26.7) {\HUGE GREY};
 	\node[cardtext, text=gray] at (9.6,24.7) {
 		{\Huge Cho Chang}
@@ -460,44 +259,45 @@
 		You win if you end the game in the same room as Harry Potter without Cho Chang.
 	};
 	
-	% TODO
-	\node[teamshare, fill=black] at (9.6,26.7) {\HUGE TODO};
-	\node[cardtext, text=black] at (9.6,24.7) {
-		{\Huge TODO}
+	% PERCY WEASLEY
+	\node[teamshare, fill=gray] at (9.6,26.7) {\HUGE GREY};
+	\node[cardtext, text=gray] at (9.6,24.7) {
+		{\Huge Percy Weasley}
 		\seperatordescription
-		@TODO
+		You are the House Prefect, and were destined to lead.
 		\seperatorwin
-		@TODO
+		You win if you end the game as the leader of the room.
 	};
 	
-	% TODO
+	% NMYMPHADORA TONKS
 	\node[teamshare, fill=black] at (16,26.7) {\HUGE GREY};
 	\node[cardtext, text=black] at (16,24.7) {
-		{\Huge TODO}
+		{\Huge Nymphadora Tonks}
 		\seperatoraction
-		@TODO
+		\condition{Metamorphmagus}: You become a clone of the first player with whom you card share with. 
 		\seperatorwin
-		@TODO
+		If the person that you cloned win, you also win. Otherwise you lose.
 	};
 	
-	% TODO
+	% FELIX FELICIS
 	\node[teamshare, fill=black] at (3.2,17.8) {\HUGE TODO};
 	\node[cardtext, text=black] at (3.2,15.8) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
+		{\Huge Felix Felicis}
+		\seperatordescription
+		Are you feelin' lucky?
 		\seperatorwin
-		@TODO
+		Before the last round begins, you must publically announce which team you think is going to win. If you are correct, you win. If not, you lose.
 	};
 	
-	% TODO
+	% POLYJUICE POTATO (AKA HOT POTATO)
 	\node[teamshare, fill=black] at (9.6,17.8) {\HUGE TODO};
 	\node[cardtext, text=black] at (9.6,15.8) {
-		{\Huge TODO}
+		{\Huge Polyjuice Potato}
 		\seperatoraction
-		@TODO
+		Hot Potato: Whenever a player Card or Color Shares with you, then reveal your card. You must immediately switch card!
+		You gain their card, and assume their previous role. They become the new Polyjuice Potato.
 		\seperatorwin
-		@TODO
+		When the game ends, you lose. Guess you shouldn't have used that cat hair.
 	};
 	
 	% TODO

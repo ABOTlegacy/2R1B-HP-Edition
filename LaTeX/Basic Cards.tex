@@ -32,11 +32,11 @@
 \newcommand{\seperatorwin}{\seperator{HOW TO WIN}}
 \newcommand{\redwinsection}{
 	\seperatorwin
-	You win if \character{Harry Potter} does not gain the \condition{dead} condition due to \character{Voldemort}.
+	You win if \character{Harry Potter} avoids \\ the \condition{Avada Kadavra} curse.
 }
 \newcommand{\greenwinsection}{
 	\seperatorwin
-	\small You win if \character{Harry Potter} gains the \condition{dead} condition due to the \character{Voldemort}.
+	\small You win if \character{Harry Potter} gets hit by the \condition{Avada Kadavra} curse.
 }
 \newcommand{\titlefrom}[1]{\\ \tiny > from #1 <\normalsize}
 
@@ -49,81 +49,83 @@
 	% VOLDEMORT
 	\node[teamshare, fill=ForestGreen] (1) at (3.2,26.7) {\HUGE GREEN};
 	\node[cardtext, text=ForestGreen] at (3.2,24.7) {
-		{\Huge Voledmort}
+		{\Huge Voldemort}
 		\titlefrom{Harry Potter Franchise}
 		\seperatordescription
-		When the game ends, you use the Avada Kadavra Curse. Everyone in your room gains the \condition{dead} condition
+		When the game ends, you use the \condition{Avada Kadavra} Curse. Everyone in your room gains the \condition{dead} condition
 		\seperatorwin
-		Green team wins if \character{Harry Potter} gains the \condition{dead} condition.
+		Green team wins if \character{Harry Potter} \\ gains the \condition{dead} condition.
 	};
 	
-	% HARRY POTTER
-	\node[teamshare, fill=red] at (9.6,26.7) {\HUGE RED};
-	\node[cardtext, text=red] at (9.6,24.7) {
-		{\Huge Harry Potter}
+	% VOLDEMORT
+	\node[teamshare, fill=ForestGreen] at (9.6,26.7) {\HUGE GREEN};
+	\node[cardtext, text=ForestGreen] at (9.6,24.7) {
+		{\Huge Voldemort}
+		\titlefrom{Harry Potter Franchise}
+		\seperatordescription
+		When the game ends, you use the \condition{Avada Kadavra}. Everyone in your room gains the \condition{dead} condition
 		\seperatorwin
-		Red team wins if you do not gain the \condition{dead} condition from \character{Voledmort}.
+		Green team wins if \character{Harry Potter} \\ gains the \condition{dead} condition.
 	};
 	
-	% FELIX FELICIS
-	\node[teamshare, fill=gray] at (16,26.7) {\HUGE GREY};
-	\node[cardtext, text=gray] at (16,24.7) {
-		{\Huge Felix Felicis}
+	% GREEN WIZARD
+	\node[teamshare, fill=ForestGreen] at (16,26.7) {\HUGE GREEN};
+	\node[cardtext, text=ForestGreen] at (16,24.7) {
+		{\Huge Green Wizard}
 		\seperatordescription
-		Are you feelin' lucky?
-		\seperatorwin
-		Before the last round begins, you must publically announce which team you think is going to win. If you are correct, you win. If not, you lose.
+		You are on the Green Team.
+		\greenwinsection
 	};
 	
-	% RED TEAM
-	\node[teamshare, fill=red] at (3.2,17.8) {\HUGE RED};
-	\node[cardtext, text=red] at (3.2,15.8) {
-		{\Huge Red Team}
+	% GREEN WIZARD
+	\node[teamshare, fill=ForestGreen] at (3.2,17.8) {\HUGE GREEN};
+	\node[cardtext, text=ForestGreen] at (3.2,15.8) {
+		{\Huge Green Wizard}
 		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
+		You are on the Green Team.
+		\greenwinsection
 	};
 	
-	% RED TEAM
-	\node[teamshare, fill=red] at (9.6,17.8) {\HUGE RED};
-	\node[cardtext, text=red] at (9.6,15.8) {
-		{\Huge Red Team}
+	% GREEN WIZARD
+	\node[teamshare, fill=ForestGreen] at (9.6,17.8) {\HUGE GREEN};
+	\node[cardtext, text=ForestGreen] at (9.6,15.8) {
+		{\Huge Green Wizard}
 		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
+		You are on the Green Team.
+		\greenwinsection
 	};
 	
-	% RED TEAM
-	\node[teamshare, fill=red] at (16,17.8) {\HUGE RED};
-	\node[cardtext, text=red] at (16,15.8) {
-		{\Huge Red Team}
+	% GREEN WIZARD
+	\node[teamshare, fill=ForestGreen] at (16,17.8) {\HUGE GREEN};
+	\node[cardtext, text=ForestGreen] at (16,15.8) {
+		{\Huge Green Wizard}
 		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
+		You are on the Green Team.
+		\greenwinsection
 	};
 	
-	% GREEN TEAM
+	% GREEN WIZARD
 	\node[teamshare, fill=ForestGreen] at (3.2,8.9) {\HUGE GREEN};
 	\node[cardtext, text=ForestGreen] at (3.2,6.9) {
-		{\Huge Green Team}
+		{\Huge Green Wizard}
 		\seperatordescription
 		You are on the Green Team.
 		\greenwinsection
 	};
 	
-	% GREEN TEAM
+	% GREEN WIZARD
 	\node[teamshare, fill=ForestGreen] at (9.6,8.9) {\HUGE GREEN};
 	\node[cardtext, text=ForestGreen] at (9.6,6.9) {
-		{\Huge Green Team}
+		{\Huge Green Wizard}
 		\seperatordescription
 		You are on the Green Team.
 		\greenwinsection
 	};
 	
-	% GREEN TEAM
+	% GREEN WIZARD
 	\node[teamshare, fill=ForestGreen] at (16,8.9) {\HUGE GREEN};
 	\node[cardtext, text=ForestGreen] at (16,6.9) {
-		{\Huge Green Team}
+		{\Huge Green Wizard}
 		\seperatordescription
 		You are on the Green Team.
 		\greenwinsection
@@ -149,87 +151,85 @@
 
 \noindent \begin{tikzpicture}[outer sep=0]
 
-	% RED TEAM
+	% HARRY POTTER
 	\node[teamshare, fill=red] (1) at (3.2,26.7) {\HUGE RED};
 	\node[cardtext, text=red] at (3.2,24.7) {
-		{\Huge Red Team}
+		{\Huge Harry Potter}
+		\titlefrom{Harry Potter Franchise}
+		\seperatorwin
+		Red team wins if you avoid the \condition{Avada Kadavra} Curse.
+	};
+	
+	% HARRY POTTER
+	\node[teamshare, fill=red] at (9.6,26.7) {\HUGE RED};
+	\node[cardtext, text=red] at (9.6,24.7) {
+		{\Huge Harry Potter}
+		\titlefrom{Harry Potter Franchise}
+		\seperatorwin
+		Red team wins if you avoid the \condition{Avada Kadavra} Curse.
+	};
+	
+	% RED WIZARD
+	\node[teamshare, fill=red] at (16,26.7) {\HUGE RED};
+	\node[cardtext, text=red] at (16,24.7) {
+		{\Huge Red Wizard}
 		\seperatordescription
 		You are on the Red Team.
 		\redwinsection
 	};
 	
-	% GREEN TEAM
-	\node[teamshare, fill=ForestGreen] at (9.6,26.7) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (9.6,24.7) {
-		{\Huge Green Team}
-		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
-	};
-	
-	% POLYJUICE POTATO (AKA HOT POTATO)
-	\node[teamshare, fill=gray] at (16,26.7) {\HUGE GREY};
-	\node[cardtext, text=gray] at (16,24.7) {
-		{\Huge Polyjuice Potato}
-		\seperatoraction
-		Hot Potato: Whenever a player Card or Color Shares with you, then reveal your card. You must immediately switch card!
-		You gain their card, and assume their previous role. They become the new Polyjuice Potato.
-		\seperatorwin
-		When the game ends, you lose. Guess you shouldn't have used that cat hair.
-	};
-	
-	% RED TEAM
+	% RED WIZARD
 	\node[teamshare, fill=red] at (3.2,17.8) {\HUGE RED};
 	\node[cardtext, text=red] at (3.2,15.8) {
-		{\Huge Red Team}
+		{\Huge Red Wizard}
 		\seperatordescription
 		You are on the Red Team.
 		\redwinsection
 	};
 	
-	% RED TEAM
+	% RED WIZARD
 	\node[teamshare, fill=red] at (9.6,17.8) {\HUGE RED};
 	\node[cardtext, text=red] at (9.6,15.8) {
-		{\Huge Red Team}
+		{\Huge Red Wizard}
 		\seperatordescription
 		You are on the Red Team.
 		\redwinsection
 	};
 	
-	% RED TEAM
+	% RED WIZARD
 	\node[teamshare, fill=red] at (16,17.8) {\HUGE RED};
 	\node[cardtext, text=red] at (16,15.8) {
-		{\Huge Red Team}
+		{\Huge Red Wizard}
 		\seperatordescription
 		You are on the Red Team.
 		\redwinsection
 	};
 	
-	% GREEN TEAM
-	\node[teamshare, fill=ForestGreen] at (3.2,8.9) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (3.2,6.9) {
-		{\Huge Green Team}
+	% RED WIZARD
+	\node[teamshare, fill=red] at (3.2,8.9) {\HUGE RED};
+	\node[cardtext, text=red] at (3.2,6.9) {
+		{\Huge Red Wizard}
 		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
+		You are on the Red Team.
+		\redwinsection
 	};
 	
-	% GREEN TEAM
-	\node[teamshare, fill=ForestGreen] at (9.6,8.9) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (9.6,6.9) {
-		{\Huge Green Team}
+	% RED WIZARD
+	\node[teamshare, fill=red] at (9.6,8.9) {\HUGE RED};
+	\node[cardtext, text=red] at (9.6,6.9) {
+		{\Huge Red Wizard}
 		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
+		You are on the Red Team.
+		\redwinsection
 	};
 	
-	% GREEN TEAM
-	\node[teamshare, fill=ForestGreen] at (16,8.9) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (16,6.9) {
-		{\Huge Green Team}
+	% RED WIZARD
+	\node[teamshare, fill=red] at (16,8.9) {\HUGE RED};
+	\node[cardtext, text=red] at (16,6.9) {
+		{\Huge Red Wizard}
 		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
+		You are on the Red Team.
+		\redwinsection
 	};
 	
 	\draw (0,0) -- (19.2,0);
@@ -241,120 +241,7 @@
 	\draw (12.8,0) -- (12.8,26.7);
 	\draw (19.2,0) -- (19.2,26.7);
 
-
 \end{tikzpicture}
 \includepdf[pages={1}, angle=0]{cardsbackground.pdf}
-\pagebreak
-\noindent \begin{tikzpicture}[outer sep=0]
-
-	% TODO
-	\node[teamshare, fill=black] (1) at (3.2,26.7) {\HUGE TODO};
-	\node[cardtext, text=black] at (3.2,24.7) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (9.6,26.7) {\HUGE TODO};
-	\node[cardtext, text=black] at (9.6,24.7) {
-		{\Huge TODO}
-		\seperatordescription
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (16,26.7) {\HUGE GREY};
-	\node[cardtext, text=black] at (16,24.7) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (3.2,17.8) {\HUGE TODO};
-	\node[cardtext, text=black] at (3.2,15.8) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (9.6,17.8) {\HUGE TODO};
-	\node[cardtext, text=black] at (9.6,15.8) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (16,17.8) {\HUGE TODO};
-	\node[cardtext, text=black] at (16,15.8) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (3.2,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (3.2,6.9) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (9.6,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (9.6,6.9) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (16,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (16,6.9) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	\draw (0,0) -- (19.2,0);
-	\draw (0,8.9) -- (19.2,8.9);
-	\draw (0,17.8) -- (19.2,17.8);
-	\draw (0,26.7) -- (19.2,26.7);
-	\draw (0,0) -- (0,26.7);
-	\draw (6.4,0) -- (6.4,26.7);
-	\draw (12.8,0) -- (12.8,26.7);
-	\draw (19.2,0) -- (19.2,26.7);
-
-
-\end{tikzpicture}
-\includepdf[pages={1}, angle=0]{cardsbackground.pdf}
-
-
-
-
-
-
-
 
 \end{document}

@@ -1,0 +1,251 @@
+\documentclass[a4paper, oneside]{memoir}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{pifont}
+\usepackage{amssymb}
+\usepackage{fourier}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+\usepackage{pdfpages}
+\usepackage[sfdefault]{roboto}
+\usepackage{color}
+
+% Styles
+\tikzstyle{teamshare} = [below, text width=5.4cm, inner sep = 0.5cm, text=white, align=center]
+\tikzstyle{cardtext} = [below, text width=5.9cm, inner sep = 0.25cm, text centered]
+\setlrmarginsandblock{0.9cm}{*}{1}
+\setulmarginsandblock{1.2cm}{*}{1}
+\checkandfixthelayout[nearest]
+\pagestyle{empty}
+
+% Define Commands
+\newcommand{\condition}[1]{\textbf{#1}}
+\newcommand{\character}[1]{\textbf{#1}}
+\newdimen\titlespacing
+\titlespacing=0.15cm
+
+% Define Seperators
+\newcommand{\seperator}[1]{\\ \vspace{\titlespacing} \hrulefill {} \tiny \bfseries #1 \normalfont \normalsize \hrulefill \\ \vspace{\titlespacing}}
+\newcommand{\seperatoraction}{\seperator{POWER}}
+\newcommand{\seperatordescription}{\seperator{DESCRIPTION}}
+\newcommand{\seperatorcondition}{\seperator{CONDITION}}
+\newcommand{\seperatorwin}{\seperator{HOW TO WIN}}
+\newcommand{\redwinsection}{
+	\seperatorwin
+	You win if \character{Harry Potter} does not gain the \condition{dead} condition due to \character{Voldemort}.
+}
+\newcommand{\greenwinsection}{
+	\seperatorwin
+	\small You win if \character{Harry Potter} gains the \condition{dead} condition due to the \character{Voldemort}.
+}
+\newcommand{\titlefrom}[1]{\\ \tiny > from #1 <\normalsize}
+
+% Begin Document
+\begin{document}
+\noindent \begin{tikzpicture}[outer sep=0]
+
+
+	% HONESTY WIZARD (RED TEAM)
+	\node[teamshare, fill=red] (1) at (3.2,26.7) {\HUGE RED};
+	\node[cardtext, text=red] at (3.2,24.7) {
+		{\Huge Honesty Wizard}
+		\seperatorcondition
+		\condition{Truth}: Players with this condition must always verbally tell the truth. You can lie as long as it's not verbally.
+		\redwinsection
+	};
+	
+	% COY WIZARD (RED TEAM)
+	\node[teamshare, fill=red] at (9.6,26.7) {\HUGE RED};
+	\node[cardtext, text=red] at (9.6,24.7) {
+		{\Huge Coy Wizard}
+		\seperatorcondition
+		\condition{Coy}: Players with this condition can only color share and never can show your full card.
+		\redwinsection
+	};
+	
+	% FIBBER WIZARD (RED TEAM)
+	\node[teamshare, fill=red] at (16,26.7) {\HUGE RED};
+	\node[cardtext, text=red] at (16,24.7) {
+		{\Huge Fibber Wizard}
+		\seperatorcondition
+		\condition{Fib}: Players with the this condition must always verbally lie. This means that you are permitted to tell the truth as long as it is not verbally.
+		\redwinsection
+	};
+	
+	% HONESTY WIZARD (GREEN TEAM)
+	\node[teamshare, fill=ForestGreen] at (3.2,17.8) {\HUGE GREEN};
+	\node[cardtext, text=ForestGreen] at (3.2,15.8) {
+		{\Huge Honesty Wizard}
+		\seperatorcondition
+		\condition{Truth}: Players with this condition must always verbally tell the truth. You can lie as long as it's not verbally.
+		\greenwinsection
+	};
+	
+	% COY WIZARD (GREEN TEAM)
+	\node[teamshare, fill=ForestGreen] at (9.6,17.8) {\HUGE GREEN};
+	\node[cardtext, text=ForestGreen] at (9.6,15.8) {
+		{\Huge Coy Wizard}
+		\seperatorcondition
+		\condition{Coy}: Players with this condition can only color share and never can show your full card.
+		\greenwinsection
+	};
+	
+	% FIBBER WIZARD (GREEN TEAM)
+	\node[teamshare, fill=ForestGreen] at (16,17.8) {\HUGE GREEN};
+	\node[cardtext, text=ForestGreen] at (16,15.8) {
+		{\Huge Fibber Wizard}
+		\seperatorcondition
+		\condition{Fib}: Players with the “fib” condition must always verbally lie. This means that you are permitted to tell the truth as long as it is not verbally.
+		\greenwinsection
+	};
+	
+	% TODO
+	\node[teamshare, fill=black] at (3.2,8.9) {\HUGE TODO};
+	\node[cardtext, text=black] at (3.2,6.9) {
+		{\Huge TODO}
+		\seperatoraction
+		@TODO
+		\seperatorwin
+		@TODO
+	};
+	
+	% TODO
+	\node[teamshare, fill=black] at (9.6,8.9) {\HUGE TODO};
+	\node[cardtext, text=black] at (9.6,6.9) {
+		{\Huge TODO}
+		\seperatoraction
+		@TODO
+		\seperatorwin
+		@TODO
+	};
+	
+	% TODO
+	\node[teamshare, fill=black] at (16,8.9) {\HUGE TODO};
+	\node[cardtext, text=black] at (16,6.9) {
+		{\Huge TODO}
+		\seperatoraction
+		@TODO
+		\seperatorwin
+		@TODO
+	};
+	
+	\draw (0,0) -- (19.2,0);
+	\draw (0,8.9) -- (19.2,8.9);
+	\draw (0,17.8) -- (19.2,17.8);
+	\draw (0,26.7) -- (19.2,26.7);
+	\draw (0,0) -- (0,26.7);
+	\draw (6.4,0) -- (6.4,26.7);
+	\draw (12.8,0) -- (12.8,26.7);
+	\draw (19.2,0) -- (19.2,26.7);
+
+\end{tikzpicture}
+\includepdf[pages={1}, angle=0]{cardsbackground.pdf}
+\pagebreak
+
+\noindent \begin{tikzpicture}[outer sep=0]
+
+	% SHY WIZARD (RED TEAM)
+	\node[teamshare, fill=red] (1) at (3.2,26.7) {\HUGE RED};
+	\node[cardtext, text=red] at (3.2,24.7) {
+		{\Huge Shy Wizard}
+		\seperatorcondition
+		\condition{Shy}: You cannot show any part of your card to anyone.
+		\redwinsection
+	};
+	
+	% NEGOTIATOR WIZARD (RED TEAM)
+	\node[teamshare, fill=red] at (9.6,26.7) {\HUGE RED};
+	\node[cardtext, text=red] at (9.6,24.7) {
+		{\Huge Negotiator Wizard}
+		\seperatorcondition
+		\condition{All-Or-Nothing}: You can only accept full card shares. You can never show just your color share.
+		\redwinsection
+	};
+	
+	% AUROR (RED TEAM)
+	\node[teamshare, fill=red] at (16,26.7) {\HUGE RED};
+	\node[cardtext, text=ForestGreen] at (16,24.7) {
+		{\Huge Auror}
+		\seperatorcondition
+		\condition{Spy}: You are actually on the \condition{Green Team}.
+		\greenwinsection
+	};
+	
+	% SHY WIZARD (GREEN TEAM)
+	\node[teamshare, fill=ForestGreen] at (3.2,17.8) {\HUGE GREEN};
+	\node[cardtext, text=ForestGreen] at (3.2,15.8) {
+		{\Huge Shy Wizard}
+		\seperatorcondition
+		\condition{Shy}: You cannot show any part of your card to anyone.
+		\greenwinsection
+	};
+	
+	% NEGOTIATOR WIZARD (GREEN TEAM)
+	\node[teamshare, fill=ForestGreen] at (9.6,17.8) {\HUGE GREEN};
+	\node[cardtext, text=ForestGreen] at (9.6,15.8) {
+		{\Huge Negotiator Wizard}
+		\seperatorcondition
+		\condition{All-Or-Nothing}: You can only accept full card shares. You can never show just your color share.
+		\greenwinsection
+	};
+	
+	% AUROR (GREEN TEAM)
+	\node[teamshare, fill=ForestGreen] at (16,17.8) {\HUGE GREEN};
+	\node[cardtext, text=red] at (16,15.8) {
+		{\Huge Auror}
+		\seperatorcondition
+		\condition{Spy}: You are actually on the \condition{Red Team}.
+		\redwinsection
+	};
+	
+	% TODO
+	\node[teamshare, fill=black] at (3.2,8.9) {\HUGE TODO};
+	\node[cardtext, text=black] at (3.2,6.9) {
+		{\Huge TODO}
+		\seperatoraction
+		@TODO
+		\seperatorwin
+		@TODO
+	};
+	
+	% TODO
+	\node[teamshare, fill=black] at (9.6,8.9) {\HUGE TODO};
+	\node[cardtext, text=black] at (9.6,6.9) {
+		{\Huge TODO}
+		\seperatoraction
+		@TODO
+		\seperatorwin
+		@TODO
+	};
+	
+	% TODO
+	\node[teamshare, fill=black] at (16,8.9) {\HUGE TODO};
+	\node[cardtext, text=black] at (16,6.9) {
+		{\Huge TODO}
+		\seperatoraction
+		@TODO
+		\seperatorwin
+		@TODO
+	};
+	
+	\draw (0,0) -- (19.2,0);
+	\draw (0,8.9) -- (19.2,8.9);
+	\draw (0,17.8) -- (19.2,17.8);
+	\draw (0,26.7) -- (19.2,26.7);
+	\draw (0,0) -- (0,26.7);
+	\draw (6.4,0) -- (6.4,26.7);
+	\draw (12.8,0) -- (12.8,26.7);
+	\draw (19.2,0) -- (19.2,26.7);
+
+
+\end{tikzpicture}
+\includepdf[pages={1}, angle=90]{cardsbackground.pdf}
+
+
+
+
+
+
+
+
+\end{document}
