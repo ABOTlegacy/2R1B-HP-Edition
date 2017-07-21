@@ -9,6 +9,8 @@
 \usepackage{pdfpages}
 \usepackage[sfdefault]{roboto}
 \usepackage{color}
+\usepackage{etoolbox}
+\usepackage{titlecaps}
 
 % Styles
 \tikzstyle{teamshare} = [below, text width=5.4cm, inner sep = 0.5cm, text=white, align=center]
@@ -23,446 +25,203 @@
 \newcommand{\character}[1]{\textbf{#1}}
 \newdimen\titlespacing
 \titlespacing=0.15cm
-
-% Define Seperators
+%%%
+%%% SEPARATORS
+%%%
 \newcommand{\seperator}[1]{\\ \vspace{\titlespacing} \hrulefill {} \tiny \bfseries #1 \normalfont \normalsize \hrulefill \\ \vspace{\titlespacing}}
 \newcommand{\seperatoraction}{\seperator{POWER}}
 \newcommand{\seperatordescription}{\seperator{DESCRIPTION}}
 \newcommand{\seperatorcondition}{\seperator{CONDITION}}
 \newcommand{\seperatorwin}{\seperator{HOW TO WIN}}
-\newcommand{\redwinsection}{
-	\seperatorwin
-	You win if \character{Harry Potter} does not gain the \condition{dead} condition due to \character{Voldemort}.
-}
-\newcommand{\greenwinsection}{
-	\seperatorwin
-	\small You win if \character{Harry Potter} gains the \condition{dead} condition due to the \character{Voldemort}.
-}
+\newcommand{\redwinsection}{\seperatorwin You win if \character{Harry Potter} avoids \\ the \condition{Avada Kadavra} curse.}
+\newcommand{\greenwinsection}{\seperatorwin \small You win if \character{Harry Potter} gets hit by the \condition{Avada Kadavra} curse.}
+\newcommand{\winsection}{}
 \newcommand{\titlefrom}[1]{\\ \tiny > from #1 <\normalsize}
-
-% Begin Document
-\begin{document}
-\noindent \begin{tikzpicture}[outer sep=0]
-
-	% GINNY WEASLEY (AKA PRESIDENT'S WIFE)
-	\node[teamshare, fill=gray] (1) at (3.2,26.7) {\HUGE GREY};
-	\node[cardtext, text=gray] at (3.2,24.7) {
+%%%
+%%% Variables for Card Generation
+%%%
+\newcommand{\cardbody}{}\newcommand{\constColor}{}
+\newtoggle{isCustomWin}
+\newtoggle{card1}\newtoggle{card2}\newtoggle{card3}
+\newtoggle{card4}\newtoggle{card5}\newtoggle{card6}
+\newtoggle{card7}\newtoggle{card8}\newtoggle{card9}
+\togglefalse{card1}\togglefalse{card2}\togglefalse{card3}
+\togglefalse{card4}\togglefalse{card5}\togglefalse{card6}
+\togglefalse{card7}\togglefalse{card8}\togglefalse{card9}
+\newtoggle{teamGrey}\newtoggle{teamRed}\newtoggle{teamBlue}\newtoggle{teamGreen}
+\togglefalse{teamGrey}\togglefalse{teamRed}\togglefalse{teamBlue}\togglefalse{teamGreen}
+%%%
+%%% Card Generation Functions
+%%%
+\newcommand{\fnOutputCard}[7] {
+	% Args { FillColor, TextColor, Text, TitlePositionX, TitlePositionY, CardTextX, CardTextY }
+	\node[teamshare, fill=#1] (1) at (#4,#5) {\HUGE #3};
+	\node[cardtext, text=#2] at (#6,#7) {
+		\cardbody
+		\winsection
+	};
+}
+\newcommand{\fnFindCardPosition}[3] {
+	% Args { FillColor, TextColor, Text }
+	\iftoggle{card1} { \fnOutputCard{#1}{#2}{#3}{3.2}{26.7}{3.2}{24.7} };
+	\iftoggle{card2} { \fnOutputCard{#1}{#2}{#3}{9.6}{26.7}{9.6}{24.7} };
+	\iftoggle{card3} { \fnOutputCard{#1}{#2}{#3}{16}{26.7}{16}{24.7} };
+	\iftoggle{card4} { \fnOutputCard{#1}{#2}{#3}{3.2}{17.8}{3.2}{15.8} };
+	\iftoggle{card5} { \fnOutputCard{#1}{#2}{#3}{9.6}{17.8}{9.6}{15.8} };
+	\iftoggle{card6} { \fnOutputCard{#1}{#2}{#3}{16}{17.8}{16}{15.8} };
+	\iftoggle{card7} { \fnOutputCard{#1}{#2}{#3}{3.2}{8.9}{3.2}{6.9} };
+	\iftoggle{card8} { \fnOutputCard{#1}{#2}{#3}{9.6}{8.9}{9.6}{6.9} };
+	\iftoggle{card9} { \fnOutputCard{#1}{#2}{#3}{16}{8.9}{16}{6.9} };
+	\togglefalse{card1}\togglefalse{card2}\togglefalse{card3}
+	\togglefalse{card4}\togglefalse{card5}\togglefalse{card6}
+	\togglefalse{card7}\togglefalse{card8}\togglefalse{card9}
+}
+\newcommand{\fnGenerateCard}[0] {
+	\iftoggle{teamGrey} { \renewcommand{\constColor}{grey} \fnFindCardPosition{gray}{gray}{GREY} };
+	\iftoggle{teamRed} { \renewcommand{\constColor}{red} \iftoggle{isCustomWin}{}{ \renewcommand{\winsection}{\redwinsection} } \fnFindCardPosition{red}{red}{RED} };
+	\iftoggle{teamBlue} { \renewcommand{\constColor}{blue} \fnFindCardPosition{blue}{blue}{BLUE} };
+	\iftoggle{teamGreen} { \renewcommand{\constColor}{green} \iftoggle{isCustomWin}{}{\renewcommand{\winsection}{\greenwinsection}} \fnFindCardPosition{ForestGreen}{ForestGreen}{GREEN} };
+	\togglefalse{teamGrey}\togglefalse{teamRed}\togglefalse{teamBlue}\togglefalse{teamGreen}\togglefalse{isCustomWin}
+}
+\newcommand{\fnGenerateLines}[0] {
+	\draw (0,0) -- (19.2,0);
+	\draw (0,8.9) -- (19.2,8.9);
+	\draw (0,17.8) -- (19.2,17.8);
+	\draw (0,26.7) -- (19.2,26.7);
+	\draw (0,0) -- (0,26.7);
+	\draw (6.4,0) -- (6.4,26.7);
+	\draw (12.8,0) -- (12.8,26.7);
+	\draw (19.2,0) -- (19.2,26.7);
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% DEFINE CARDS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% GENERIC WIZARD
+\newcommand{\cardGenericWizard} {
+	\renewcommand{\cardbody}{ {\Huge \titlecap{\constColor} Wizard} \seperatordescription You are on the \titlecap{\constColor} Team. }
+}
+% GINNY WEASLEY (AKA PRESIDENT'S WIFE)
+\newcommand{\cardGinnyWeasley} {
+	\renewcommand{\cardbody}{
 		{\Huge Ginny Weasley}
 		\seperatordescription
 		You are the girlfriend of Harry Potter.
-		\seperatorwin
-		You win if you end the game in the same room as Harry Potter without Cho Chang.
-	};
-	
-	% CHO CHANG (AKA PRESIDENT'S MISTRESS)
-	\node[teamshare, fill=gray] at (9.6,26.7) {\HUGE GREY};
-	\node[cardtext, text=gray] at (9.6,24.7) {
+	}
+	\renewcommand{\winsection}{ \seperatorwin You win if you end the game in the same room as \character{Harry Potter} without \character{Cho Chang} }
+	\toggletrue{teamGrey}
+}
+% CHO CHANG (AKA PRESIDENT'S MISTRESS)
+\newcommand{\cardChoChang} {
+	\renewcommand{\cardbody}{
 		{\Huge Cho Chang}
 		\seperatordescription
-		You are the ex-girlfriend of Harry Potter.
-		\seperatorwin
-		You win if you end the game in the same room as Harry Potter without Ginny Weasley.
-	};
-	
-	% CEDRIC DIGGORY
-	\node[teamshare, fill=gray] at (16,26.7) {\HUGE GREY};
-	\node[cardtext, text=gray] at (16,24.7) {
-		{\Huge Cedric Diggory}
-		\seperatoraction
-		You're destiny is to die by the hands of Voldemort.
-		\seperatorwin
-		You win if you end the game in the same room as Voldemort.
-	};
-	
-	% DUMBLEDORE
-	\node[teamshare, fill=black] at (3.2,17.8) {\HUGE TODO};
-	\node[cardtext, text=black] at (3.2,15.8) {
-		{\Huge Dumbledore}
-		\seperatordescription
-		@TODO
-		\redwinsection
-	};
-	
-	% GRINDLEWALD
-	\node[teamshare, fill=black] at (9.6,17.8) {\HUGE TODO};
-	\node[cardtext, text=black] at (9.6,15.8) {
-		{\Huge Grindlewald}
-		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
-	};
-	
-	% FILCH
-	\node[teamshare, fill=black] at (16,17.8) {\HUGE TODO};
-	\node[cardtext, text=black] at (16,15.8) {
-		{\Huge Filch}
-		\seperatordescription
-		@TODO
-		\redwinsection
-	};
-	
-	% DUDLY DURSLEY
-	\node[teamshare, fill=black] at (3.2,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (3.2,6.9) {
-		{\Huge Dudley Dursley}
-		\seperatordescription
-		@TODO
-		\greenwinsection
-	};
-	
-	% PETUNIA DURSLEY
-	\node[teamshare, fill=black] at (9.6,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (9.6,6.9) {
-		{\Huge Petunia Dursley}
-		\seperatordescription
-		@TODO
-		\greenwinsection
-	};
-	
-	% VERNON DURSLEY
-	\node[teamshare, fill=black] at (16,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (16,6.9) {
-		{\Huge Vernon Dursley}
-		\seperatordescription
-		@TODO
-		\greenwinsection
-	};
-	
-	\draw (0,0) -- (19.2,0);
-	\draw (0,8.9) -- (19.2,8.9);
-	\draw (0,17.8) -- (19.2,17.8);
-	\draw (0,26.7) -- (19.2,26.7);
-	\draw (0,0) -- (0,26.7);
-	\draw (6.4,0) -- (6.4,26.7);
-	\draw (12.8,0) -- (12.8,26.7);
-	\draw (19.2,0) -- (19.2,26.7);
-
-\end{tikzpicture}
-\includepdf[pages={1}, angle=90]{cardsbackground.pdf}
-\pagebreak
-
-\noindent \begin{tikzpicture}[outer sep=0]
-	
-	% HERMIONE G.
-	\node[teamshare, fill=black] (1) at (3.2,26.7) {\HUGE TODO};
-	\node[cardtext, text=black] at (3.2,24.7) {
-		{\Huge Hermione G.}
-		\seperatordescription
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% RON WEASLEY
-	\node[teamshare, fill=black] at (9.6,26.7) {\HUGE TODO};
-	\node[cardtext, text=black] at (9.6,24.7) {
-		{\Huge Ron Weasley}
-		\seperatordescription
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% NEVILLE LONGBOTTOM
-	\node[teamshare, fill=black] at (16,26.7) {\HUGE TODO};
-	\node[cardtext, text=black] at (16,24.7) {
-		{\Huge Neville L.}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% RUBEAS HAGRID
-	\node[teamshare, fill=black] at (3.2,17.8) {\HUGE TODO};
-	\node[cardtext, text=black] at (3.2,15.8) {
-		{\Huge R. Hagrid}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% BELLATRIX LESTRANGE
-	\node[teamshare, fill=black] at (9.6,17.8) {\HUGE TODO};
-	\node[cardtext, text=black] at (9.6,15.8) {
-		{\Huge Bellatrix L.}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% LUNA LOVEGOOD
-	\node[teamshare, fill=black] at (16,17.8) {\HUGE TODO};
-	\node[cardtext, text=black] at (16,15.8) {
-		{\Huge Luna Lovegood}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% DRACO MALFOY
-	\node[teamshare, fill=black] at (3.2,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (3.2,6.9) {
-		{\Huge Draco Malfoy}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% MAD-EYE MOODY
-	\node[teamshare, fill=black] at (9.6,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (9.6,6.9) {
-		{\Huge (Mad-Eye) Moody}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% SNAPE
+		You are the ex-girlfriend of \character{Harry Potter}.
+	}
+	\renewcommand{\winsection}{ \seperatorwin You win if you end the game in the same room as \character{Harry Potter} without \character{Ginny Weasley}. }
+	\toggletrue{teamGrey}
+}
+% SEVERUS SNAPE (AKA MASTERMIND)
+\newcommand{\cardSeverusSnape} {
 	\node[teamshare, fill=red] at (16,8.9) {\HUGE RED};
 	\node[teamshare, fill=ForestGreen,rotate=180] at (16,0) {\HUGE GREEN};
 	\node[cardtext, text=gray] at (16,7.1) {
-		{\Huge Snape}
+		{\Huge Severus Snape}
 		\seperatorwin
-		At the end of the game, before anyone reveal their cards, you must publically announce the colour of \emph{every} player. If correct, you win and everyone else loses.
+		At the end of the game, before anyone reveal their cards, you must publically announce the color of \emph{every} player. If correct, you win and everyone else loses.
 		\\\vspace{0.3cm}
 		You can use either color for Color Share or Reveal.
 	};
-	
-	\draw (0,0) -- (19.2,0);
-	\draw (0,8.9) -- (19.2,8.9);
-	\draw (0,17.8) -- (19.2,17.8);
-	\draw (0,26.7) -- (19.2,26.7);
-	\draw (0,0) -- (0,26.7);
-	\draw (6.4,0) -- (6.4,26.7);
-	\draw (12.8,0) -- (12.8,26.7);
-	\draw (19.2,0) -- (19.2,26.7);
-
-\end{tikzpicture}
-\includepdf[pages={1}, angle=90]{cardsbackground.pdf}
-\pagebreak
-
-\noindent \begin{tikzpicture}[outer sep=0]
-
-	% Garrick Ollivander
-	\node[teamshare, fill=black] (1) at (3.2,26.7) {\HUGE TODO};
-	\node[cardtext, text=black] at (3.2,24.7) {
-		{\Huge G. Ollivander }
-		\seperatordescription
-		You are the girlfriend of Harry Potter.
-		\seperatorwin
-		You win if you end the game in the same room as Harry Potter without Cho Chang.
-	};
-	
-	% PERCY WEASLEY
-	\node[teamshare, fill=gray] at (9.6,26.7) {\HUGE GREY};
-	\node[cardtext, text=gray] at (9.6,24.7) {
+}
+% PERCY WEASLEY (AKA BORN LEADER)
+\newcommand{\cardPercyWeasley} {
+	\renewcommand{\cardbody}{
 		{\Huge Percy Weasley}
 		\seperatordescription
 		You are the House Prefect, and were destined to lead.
-		\seperatorwin
-		You win if you end the game as the leader of the room.
-	};
-	
-	% NMYMPHADORA TONKS
-	\node[teamshare, fill=black] at (16,26.7) {\HUGE GREY};
-	\node[cardtext, text=black] at (16,24.7) {
+	}
+	\renewcommand{\winsection}{ \seperatorwin You win if you end the game as the leader of the room. }
+	\toggletrue{teamGrey}
+}
+% NMYMPHADORA TONKS (AKA CLONE)
+\newcommand{\cardNmymphadoraTonks} {
+	\renewcommand{\cardbody}{
 		{\Huge Nymphadora Tonks}
 		\seperatoraction
-		\condition{Metamorphmagus}: You become a clone of the first player with whom you card share with. 
-		\seperatorwin
-		If the person that you cloned win, you also win. Otherwise you lose.
-	};
-	
-	% FELIX FELICIS
-	\node[teamshare, fill=black] at (3.2,17.8) {\HUGE TODO};
-	\node[cardtext, text=black] at (3.2,15.8) {
-		{\Huge Felix Felicis}
+		\condition{Metamorphmagus}: You become a clone of the first player with whom you card share with. You copy all their conditions.
+	}
+	\renewcommand{\winsection}{ \seperatorwin If the person that you cloned win, you also win. Otherwise you lose. }
+	\toggletrue{teamGrey}
+}
+% GAMBLING WIZARD (AKA GAMBLER)
+\newcommand{\cardGamblingWizard} {
+	\renewcommand{\cardbody}{
+		{\Huge Gambling Wizard }
 		\seperatordescription
-		Are you feelin' lucky?
-		\seperatorwin
-		Before the last round begins, you must publically announce which team you think is going to win. If you are correct, you win. If not, you lose.
-	};
-	
-	% POLYJUICE POTATO (AKA HOT POTATO)
-	\node[teamshare, fill=black] at (9.6,17.8) {\HUGE TODO};
-	\node[cardtext, text=black] at (9.6,15.8) {
+		Hopefully you took your Felix Felicis potion!
+	}
+	\renewcommand{\winsection}{ \seperatorwin Before the last round begins, you must publically announce which team you think is going to win. If you are correct, you win. If not, you lose. }
+	\toggletrue{teamGrey}
+}
+% POLYJUICE POTATO (AKA HOT POTATO)
+\newcommand{\cardPolyjuicePotato} {
+	\renewcommand{\cardbody}{
 		{\Huge Polyjuice Potato}
 		\seperatoraction
 		Hot Potato: Whenever a player Card or Color Shares with you, then reveal your card. You must immediately switch card!
 		You gain their card, and assume their previous role. They become the new Polyjuice Potato.
-		\seperatorwin
-		When the game ends, you lose. Guess you shouldn't have used that cat hair.
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (16,17.8) {\HUGE TODO};
-	\node[cardtext, text=black] at (16,15.8) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (3.2,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (3.2,6.9) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (9.6,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (9.6,6.9) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (16,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (16,6.9) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	\draw (0,0) -- (19.2,0);
-	\draw (0,8.9) -- (19.2,8.9);
-	\draw (0,17.8) -- (19.2,17.8);
-	\draw (0,26.7) -- (19.2,26.7);
-	\draw (0,0) -- (0,26.7);
-	\draw (6.4,0) -- (6.4,26.7);
-	\draw (12.8,0) -- (12.8,26.7);
-	\draw (19.2,0) -- (19.2,26.7);
-
-\end{tikzpicture}
-\includepdf[pages={1}, angle=90]{cardsbackground.pdf}
-\pagebreak
-
-\noindent \begin{tikzpicture}[outer sep=0]
-
-	% TODO
-	\node[teamshare, fill=black] (1) at (3.2,26.7) {\HUGE TODO};
-	\node[cardtext, text=black] at (3.2,24.7) {
-		{\Huge TODO}
+	}
+	\renewcommand{\winsection}{ \seperatorwin When the game ends, you lose. Guess you shouldn't have used that cat hair. }
+	\toggletrue{teamGrey}
+}
+% PROF. TRELAWNEY (AKA TELEPATH)
+\newcommand{\cardProfessorTrelawney} {
+	\renewcommand{\cardbody}{
+		{\Huge Prof Trelawney}
 		\seperatordescription
-		You are the girlfriend of Harry Potter.
-		\seperatorwin
-		You win if you end the game in the same room as Harry Potter without Cho Chang.
-	};
+		You are a seer, whose \\predictions are hit or miss.
+	}
+	\renewcommand{\winsection}{ \seperatorwin You win if you correctly predict the player (not character) that will be the hostage coming into your room at the end of the last round. To formalize your prediction, you must publicly reveal your card during the last round of the game and verbally name your prediction. }
+	\toggletrue{teamGrey}
+}
+% CEDRIC DIGGORY
+% ALBUS DUMBLEDORE
+% GRINDLEWALD
+% FILCH
+% DUDLY DURSLEY
+% PETUNIA DURSLEY
+% VERNON DURSLEY
+% HERMIONE G.
+% RON WEASLEY
+% NEVILLE LONGBOTTOM
+% RUBEAS HAGRID
+% BELLATRIX LESTRANGE
+% LUNA LOVEGOOD
+% DRACO MALFOY
+% MAD-EYE MOODY
+% GARRICK OLLIVANDER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+	\noindent \begin{tikzpicture}[outer sep=0]
 	
-	% TODO
-	\node[teamshare, fill=black] at (9.6,26.7) {\HUGE TODO};
-	\node[cardtext, text=black] at (9.6,24.7) {
-		{\Huge TODO}
-		\seperatordescription
-		@TODO
-		\seperatorwin
-		@TODO
-	};
+	\toggletrue{card1} \cardGinnyWeasley \fnGenerateCard
+	\toggletrue{card2} \cardChoChang \fnGenerateCard
+	\toggletrue{card3} \cardNmymphadoraTonks \fnGenerateCard
 	
-	% TODO
-	\node[teamshare, fill=black] at (16,26.7) {\HUGE GREY};
-	\node[cardtext, text=black] at (16,24.7) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
+	\toggletrue{card4} \cardPercyWeasley \fnGenerateCard
+	\toggletrue{card5} \cardGamblingWizard \fnGenerateCard
+	\toggletrue{card6} \cardPolyjuicePotato \fnGenerateCard
 	
-	% TODO
-	\node[teamshare, fill=black] at (3.2,17.8) {\HUGE TODO};
-	\node[cardtext, text=black] at (3.2,15.8) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
+	\toggletrue{card7} \cardProfessorTrelawney \fnGenerateCard
+	\toggletrue{card8} \cardGenericWizard \toggletrue{teamGreen} \fnGenerateCard
+	\toggletrue{card9} \cardSeverusSnape \fnGenerateCard
 	
-	% TODO
-	\node[teamshare, fill=black] at (9.6,17.8) {\HUGE TODO};
-	\node[cardtext, text=black] at (9.6,15.8) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (16,17.8) {\HUGE TODO};
-	\node[cardtext, text=black] at (16,15.8) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (3.2,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (3.2,6.9) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (9.6,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (9.6,6.9) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (16,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (16,6.9) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	\draw (0,0) -- (19.2,0);
-	\draw (0,8.9) -- (19.2,8.9);
-	\draw (0,17.8) -- (19.2,17.8);
-	\draw (0,26.7) -- (19.2,26.7);
-	\draw (0,0) -- (0,26.7);
-	\draw (6.4,0) -- (6.4,26.7);
-	\draw (12.8,0) -- (12.8,26.7);
-	\draw (19.2,0) -- (19.2,26.7);
-
-
-\end{tikzpicture}
-\includepdf[pages={1}, angle=90]{cardsbackground.pdf}
-
-
-
-
-
-
-
-
+	\fnGenerateLines
+	\end{tikzpicture}
+	\includepdf[pages={1}, angle=0]{cardsbackground.pdf}
 \end{document}

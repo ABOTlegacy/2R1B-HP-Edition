@@ -9,6 +9,8 @@
 \usepackage{pdfpages}
 \usepackage[sfdefault]{roboto}
 \usepackage{color}
+\usepackage{etoolbox}
+\usepackage{titlecaps}
 
 % Styles
 \tikzstyle{teamshare} = [below, text width=5.4cm, inner sep = 0.5cm, text=white, align=center]
@@ -23,225 +25,146 @@
 \newcommand{\character}[1]{\textbf{#1}}
 \newdimen\titlespacing
 \titlespacing=0.15cm
-
-% Define Seperators
+%%%
+%%% SEPARATORS
+%%%
 \newcommand{\seperator}[1]{\\ \vspace{\titlespacing} \hrulefill {} \tiny \bfseries #1 \normalfont \normalsize \hrulefill \\ \vspace{\titlespacing}}
 \newcommand{\seperatoraction}{\seperator{POWER}}
 \newcommand{\seperatordescription}{\seperator{DESCRIPTION}}
 \newcommand{\seperatorcondition}{\seperator{CONDITION}}
 \newcommand{\seperatorwin}{\seperator{HOW TO WIN}}
-\newcommand{\redwinsection}{
-	\seperatorwin
-	You win if \character{Harry Potter} avoids \\ the \condition{Avada Kadavra} curse.
-}
-\newcommand{\greenwinsection}{
-	\seperatorwin
-	\small You win if \character{Harry Potter} gets hit by the \condition{Avada Kadavra} curse.
-}
+\newcommand{\redwinsection}{\seperatorwin You win if \character{Harry Potter} avoids \\ the \condition{Avada Kadavra} curse.}
+\newcommand{\greenwinsection}{\seperatorwin \small You win if \character{Harry Potter} gets hit by the \condition{Avada Kadavra} curse.}
+\newcommand{\winsection}{}
 \newcommand{\titlefrom}[1]{\\ \tiny > from #1 <\normalsize}
-
-% Begin Document
-\begin{document}
-	
-% New Page
-\noindent \begin{tikzpicture}[outer sep=0]
-
-	% VOLDEMORT
-	\node[teamshare, fill=ForestGreen] (1) at (3.2,26.7) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (3.2,24.7) {
-		{\Huge Voldemort}
-		\titlefrom{Harry Potter Franchise}
-		\seperatordescription
-		When the game ends, you use the \condition{Avada Kadavra} Curse. Everyone in your room gains the \condition{dead} condition
-		\seperatorwin
-		Green team wins if \character{Harry Potter} \\ gains the \condition{dead} condition.
+%%%
+%%% Variables for Card Generation
+%%%
+\newcommand{\cardbody}{}\newcommand{\constColor}{}
+\newtoggle{isCustomWin}
+\newtoggle{card1}\newtoggle{card2}\newtoggle{card3}
+\newtoggle{card4}\newtoggle{card5}\newtoggle{card6}
+\newtoggle{card7}\newtoggle{card8}\newtoggle{card9}
+\togglefalse{card1}\togglefalse{card2}\togglefalse{card3}
+\togglefalse{card4}\togglefalse{card5}\togglefalse{card6}
+\togglefalse{card7}\togglefalse{card8}\togglefalse{card9}
+\newtoggle{teamGrey}\newtoggle{teamRed}\newtoggle{teamBlue}\newtoggle{teamGreen}
+\togglefalse{teamGrey}\togglefalse{teamRed}\togglefalse{teamBlue}\togglefalse{teamGreen}
+%%%
+%%% Card Generation Functions
+%%%
+\newcommand{\fnOutputCard}[7] {
+	% Args { FillColor, TextColor, Text, TitlePositionX, TitlePositionY, CardTextX, CardTextY }
+	\node[teamshare, fill=#1] (1) at (#4,#5) {\HUGE #3};
+	\node[cardtext, text=#2] at (#6,#7) {
+		\cardbody
+		\winsection
 	};
-	
-	% VOLDEMORT
-	\node[teamshare, fill=ForestGreen] at (9.6,26.7) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (9.6,24.7) {
-		{\Huge Voldemort}
-		\titlefrom{Harry Potter Franchise}
-		\seperatordescription
-		When the game ends, you use the \condition{Avada Kadavra}. Everyone in your room gains the \condition{dead} condition
-		\seperatorwin
-		Green team wins if \character{Harry Potter} \\ gains the \condition{dead} condition.
-	};
-	
-	% GREEN WIZARD
-	\node[teamshare, fill=ForestGreen] at (16,26.7) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (16,24.7) {
-		{\Huge Green Wizard}
-		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
-	};
-	
-	% GREEN WIZARD
-	\node[teamshare, fill=ForestGreen] at (3.2,17.8) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (3.2,15.8) {
-		{\Huge Green Wizard}
-		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
-	};
-	
-	% GREEN WIZARD
-	\node[teamshare, fill=ForestGreen] at (9.6,17.8) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (9.6,15.8) {
-		{\Huge Green Wizard}
-		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
-	};
-	
-	% GREEN WIZARD
-	\node[teamshare, fill=ForestGreen] at (16,17.8) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (16,15.8) {
-		{\Huge Green Wizard}
-		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
-	};
-	
-	% GREEN WIZARD
-	\node[teamshare, fill=ForestGreen] at (3.2,8.9) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (3.2,6.9) {
-		{\Huge Green Wizard}
-		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
-	};
-	
-	% GREEN WIZARD
-	\node[teamshare, fill=ForestGreen] at (9.6,8.9) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (9.6,6.9) {
-		{\Huge Green Wizard}
-		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
-	};
-	
-	% GREEN WIZARD
-	\node[teamshare, fill=ForestGreen] at (16,8.9) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (16,6.9) {
-		{\Huge Green Wizard}
-		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
-	};
-	
+}
+\newcommand{\fnFindCardPosition}[3] {
+	% Args { FillColor, TextColor, Text }
+	\iftoggle{card1} { \fnOutputCard{#1}{#2}{#3}{3.2}{26.7}{3.2}{24.7} };
+	\iftoggle{card2} { \fnOutputCard{#1}{#2}{#3}{9.6}{26.7}{9.6}{24.7} };
+	\iftoggle{card3} { \fnOutputCard{#1}{#2}{#3}{16}{26.7}{16}{24.7} };
+	\iftoggle{card4} { \fnOutputCard{#1}{#2}{#3}{3.2}{17.8}{3.2}{15.8} };
+	\iftoggle{card5} { \fnOutputCard{#1}{#2}{#3}{9.6}{17.8}{9.6}{15.8} };
+	\iftoggle{card6} { \fnOutputCard{#1}{#2}{#3}{16}{17.8}{16}{15.8} };
+	\iftoggle{card7} { \fnOutputCard{#1}{#2}{#3}{3.2}{8.9}{3.2}{6.9} };
+	\iftoggle{card8} { \fnOutputCard{#1}{#2}{#3}{9.6}{8.9}{9.6}{6.9} };
+	\iftoggle{card9} { \fnOutputCard{#1}{#2}{#3}{16}{8.9}{16}{6.9} };
+	\togglefalse{card1}\togglefalse{card2}\togglefalse{card3}
+	\togglefalse{card4}\togglefalse{card5}\togglefalse{card6}
+	\togglefalse{card7}\togglefalse{card8}\togglefalse{card9}
+}
+\newcommand{\fnGenerateCard}[0] {
+	\iftoggle{teamGrey} { \renewcommand{\constColor}{grey} \fnFindCardPosition{gray}{gray}{GREY} };
+	\iftoggle{teamRed} { \renewcommand{\constColor}{red} \iftoggle{isCustomWin}{}{ \renewcommand{\winsection}{\redwinsection} } \fnFindCardPosition{red}{red}{RED} };
+	\iftoggle{teamBlue} { \renewcommand{\constColor}{blue} \fnFindCardPosition{blue}{blue}{BLUE} };
+	\iftoggle{teamGreen} { \renewcommand{\constColor}{green} \iftoggle{isCustomWin}{}{\renewcommand{\winsection}{\greenwinsection}} \fnFindCardPosition{ForestGreen}{ForestGreen}{GREEN} };
+	\togglefalse{teamGrey}\togglefalse{teamRed}\togglefalse{teamBlue}\togglefalse{teamGreen}\togglefalse{isCustomWin}
+}
+\newcommand{\fnGenerateLines}[0] {
 	\draw (0,0) -- (19.2,0);
 	\draw (0,8.9) -- (19.2,8.9);
 	\draw (0,17.8) -- (19.2,17.8);
 	\draw (0,26.7) -- (19.2,26.7);
-	
 	\draw (0,0) -- (0,26.7);
 	\draw (6.4,0) -- (6.4,26.7);
 	\draw (12.8,0) -- (12.8,26.7);
 	\draw (19.2,0) -- (19.2,26.7);
-
-
-
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% DEFINE CARDS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% VOLEDEMORT
+\newcommand{\cardVoldemort} {
+	\renewcommand{\cardbody}{ {\Huge Voldemort} \titlefrom{Harry Potter Franchise} \seperatordescription When the game ends, you use the \condition{Avada Kadavra} Curse. Everyone in your room gains the \condition{dead} condition.}
+	\renewcommand{\winsection}{ \seperatorwin Green team wins if \character{Harry Potter} \\ gains the \condition{dead} condition.}
+	\toggletrue{isCustomWin} \toggletrue{teamGreen}
+}
+% HARRY POTTER
+\newcommand{\cardHarryPotter} {
+	\renewcommand{\cardbody}{ {\Huge Harry Potter} \titlefrom{Harry Potter Franchise} }
+	\renewcommand{\winsection}{ \seperatorwin Red team wins if you avoid the \condition{Avada Kadavra} Curse. }
+	\toggletrue{isCustomWin} \toggletrue{teamRed}
+}
+% GENERIC WIZARD
+\newcommand{\cardGenericWizard} {
+	\renewcommand{\cardbody}{ {\Huge \titlecap{\constColor} Wizard} \seperatordescription You are on the \titlecap{\constColor} Team. }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\noindent \begin{tikzpicture}[outer sep=0]
+	% VOLDEMORT
+	\toggletrue{card1} \cardVoldemort \fnGenerateCard
+	% VOLDEMORT
+	\toggletrue{card2} \cardVoldemort \fnGenerateCard
+	% GREEN WIZARD
+	\toggletrue{card3} \cardGenericWizard \toggletrue{teamGreen} \fnGenerateCard
+	% GREEN WIZARD
+	\toggletrue{card4} \cardGenericWizard \toggletrue{teamGreen} \fnGenerateCard
+	% GREEN WIZARD
+	\toggletrue{card5} \cardGenericWizard \toggletrue{teamGreen} \fnGenerateCard
+	% GREEN WIZARD
+	\toggletrue{card6} \cardGenericWizard \toggletrue{teamGreen} \fnGenerateCard
+	% GREEN WIZARD
+	\toggletrue{card7} \cardGenericWizard \toggletrue{teamGreen} \fnGenerateCard
+	% GREEN WIZARD
+	\toggletrue{card8} \cardGenericWizard \toggletrue{teamGreen} \fnGenerateCard
+	% GREEN WIZARD
+	\toggletrue{card9} \cardGenericWizard \toggletrue{teamGreen} \fnGenerateCard
+	% LINES
+	\fnGenerateLines
 \end{tikzpicture}
-
-%Background is not my own. But courtesy of a user on BGG
 \includepdf[pages={1}, angle=0]{cardsbackground.pdf}
 \pagebreak
-
 \noindent \begin{tikzpicture}[outer sep=0]
-
 	% HARRY POTTER
-	\node[teamshare, fill=red] (1) at (3.2,26.7) {\HUGE RED};
-	\node[cardtext, text=red] at (3.2,24.7) {
-		{\Huge Harry Potter}
-		\titlefrom{Harry Potter Franchise}
-		\seperatorwin
-		Red team wins if you avoid the \condition{Avada Kadavra} Curse.
-	};
-	
+	\toggletrue{card1} \cardHarryPotter \fnGenerateCard
 	% HARRY POTTER
-	\node[teamshare, fill=red] at (9.6,26.7) {\HUGE RED};
-	\node[cardtext, text=red] at (9.6,24.7) {
-		{\Huge Harry Potter}
-		\titlefrom{Harry Potter Franchise}
-		\seperatorwin
-		Red team wins if you avoid the \condition{Avada Kadavra} Curse.
-	};
-	
+	\toggletrue{card2} \cardHarryPotter \fnGenerateCard
 	% RED WIZARD
-	\node[teamshare, fill=red] at (16,26.7) {\HUGE RED};
-	\node[cardtext, text=red] at (16,24.7) {
-		{\Huge Red Wizard}
-		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
-	};
-	
+	\toggletrue{card3} \cardGenericWizard \toggletrue{teamRed} \fnGenerateCard
 	% RED WIZARD
-	\node[teamshare, fill=red] at (3.2,17.8) {\HUGE RED};
-	\node[cardtext, text=red] at (3.2,15.8) {
-		{\Huge Red Wizard}
-		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
-	};
-	
+	\toggletrue{card4} \cardGenericWizard \toggletrue{teamRed} \fnGenerateCard
 	% RED WIZARD
-	\node[teamshare, fill=red] at (9.6,17.8) {\HUGE RED};
-	\node[cardtext, text=red] at (9.6,15.8) {
-		{\Huge Red Wizard}
-		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
-	};
-	
+	\toggletrue{card5} \cardGenericWizard \toggletrue{teamRed} \fnGenerateCard
 	% RED WIZARD
-	\node[teamshare, fill=red] at (16,17.8) {\HUGE RED};
-	\node[cardtext, text=red] at (16,15.8) {
-		{\Huge Red Wizard}
-		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
-	};
-	
+	\toggletrue{card6} \cardGenericWizard \toggletrue{teamRed} \fnGenerateCard
 	% RED WIZARD
-	\node[teamshare, fill=red] at (3.2,8.9) {\HUGE RED};
-	\node[cardtext, text=red] at (3.2,6.9) {
-		{\Huge Red Wizard}
-		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
-	};
-	
+	\toggletrue{card7} \cardGenericWizard \toggletrue{teamRed} \fnGenerateCard
 	% RED WIZARD
-	\node[teamshare, fill=red] at (9.6,8.9) {\HUGE RED};
-	\node[cardtext, text=red] at (9.6,6.9) {
-		{\Huge Red Wizard}
-		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
-	};
-	
+	\toggletrue{card8} \cardGenericWizard \toggletrue{teamRed} \fnGenerateCard
 	% RED WIZARD
-	\node[teamshare, fill=red] at (16,8.9) {\HUGE RED};
-	\node[cardtext, text=red] at (16,6.9) {
-		{\Huge Red Wizard}
-		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
-	};
-	
-	\draw (0,0) -- (19.2,0);
-	\draw (0,8.9) -- (19.2,8.9);
-	\draw (0,17.8) -- (19.2,17.8);
-	\draw (0,26.7) -- (19.2,26.7);
-	\draw (0,0) -- (0,26.7);
-	\draw (6.4,0) -- (6.4,26.7);
-	\draw (12.8,0) -- (12.8,26.7);
-	\draw (19.2,0) -- (19.2,26.7);
-
+	\toggletrue{card9} \cardGenericWizard \toggletrue{teamRed} \fnGenerateCard
+	% LINES
+	\fnGenerateLines
 \end{tikzpicture}
 \includepdf[pages={1}, angle=0]{cardsbackground.pdf}
-
 \end{document}

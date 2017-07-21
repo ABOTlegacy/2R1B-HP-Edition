@@ -9,6 +9,8 @@
 \usepackage{pdfpages}
 \usepackage[sfdefault]{roboto}
 \usepackage{color}
+\usepackage{etoolbox}
+\usepackage{titlecaps}
 
 % Styles
 \tikzstyle{teamshare} = [below, text width=5.4cm, inner sep = 0.5cm, text=white, align=center]
@@ -23,229 +25,317 @@
 \newcommand{\character}[1]{\textbf{#1}}
 \newdimen\titlespacing
 \titlespacing=0.15cm
-
-% Define Seperators
+%%%
+%%% SEPARATORS
+%%%
 \newcommand{\seperator}[1]{\\ \vspace{\titlespacing} \hrulefill {} \tiny \bfseries #1 \normalfont \normalsize \hrulefill \\ \vspace{\titlespacing}}
 \newcommand{\seperatoraction}{\seperator{POWER}}
 \newcommand{\seperatordescription}{\seperator{DESCRIPTION}}
 \newcommand{\seperatorcondition}{\seperator{CONDITION}}
 \newcommand{\seperatorwin}{\seperator{HOW TO WIN}}
-\newcommand{\redwinsection}{
-	\seperatorwin
-	You win if \character{Harry Potter} does not gain the \condition{dead} condition due to \character{Voldemort}.
-}
-\newcommand{\greenwinsection}{
-	\seperatorwin
-	\small You win if \character{Harry Potter} gains the \condition{dead} condition due to the \character{Voldemort}.
-}
+\newcommand{\redwinsection}{\seperatorwin You win if \character{Harry Potter} avoids \\ the \condition{Avada Kadavra} curse.}
+\newcommand{\greenwinsection}{\seperatorwin \small You win if \character{Harry Potter} gets hit by the \condition{Avada Kadavra} curse.}
+\newcommand{\winsection}{}
 \newcommand{\titlefrom}[1]{\\ \tiny > from #1 <\normalsize}
-
-% Begin Document
-\begin{document}
-\noindent \begin{tikzpicture}[outer sep=0]
-
-
-	% HONESTY WIZARD (RED TEAM)
-	\node[teamshare, fill=red] (1) at (3.2,26.7) {\HUGE RED};
-	\node[cardtext, text=red] at (3.2,24.7) {
+%%%
+%%% Variables for Card Generation
+%%%
+\newcommand{\cardbody}{}\newcommand{\constColor}{}
+\newtoggle{isCustomWin}
+\newtoggle{card1}\newtoggle{card2}\newtoggle{card3}
+\newtoggle{card4}\newtoggle{card5}\newtoggle{card6}
+\newtoggle{card7}\newtoggle{card8}\newtoggle{card9}
+\togglefalse{card1}\togglefalse{card2}\togglefalse{card3}
+\togglefalse{card4}\togglefalse{card5}\togglefalse{card6}
+\togglefalse{card7}\togglefalse{card8}\togglefalse{card9}
+\newtoggle{teamGrey}\newtoggle{teamRed}\newtoggle{teamBlue}\newtoggle{teamGreen}
+\togglefalse{teamGrey}\togglefalse{teamRed}\togglefalse{teamBlue}\togglefalse{teamGreen}
+%%%
+%%% Card Generation Functions
+%%%
+\newcommand{\fnOutputCard}[7] {
+	% Args { FillColor, TextColor, Text, TitlePositionX, TitlePositionY, CardTextX, CardTextY }
+	\node[teamshare, fill=#1] (1) at (#4,#5) {\HUGE #3};
+	\node[cardtext, text=#2] at (#6,#7) {
+		\cardbody
+		\winsection
+	};
+}
+\newcommand{\fnFindCardPosition}[3] {
+	% Args { FillColor, TextColor, Text }
+	\iftoggle{card1} { \fnOutputCard{#1}{#2}{#3}{3.2}{26.7}{3.2}{24.7} };
+	\iftoggle{card2} { \fnOutputCard{#1}{#2}{#3}{9.6}{26.7}{9.6}{24.7} };
+	\iftoggle{card3} { \fnOutputCard{#1}{#2}{#3}{16}{26.7}{16}{24.7} };
+	\iftoggle{card4} { \fnOutputCard{#1}{#2}{#3}{3.2}{17.8}{3.2}{15.8} };
+	\iftoggle{card5} { \fnOutputCard{#1}{#2}{#3}{9.6}{17.8}{9.6}{15.8} };
+	\iftoggle{card6} { \fnOutputCard{#1}{#2}{#3}{16}{17.8}{16}{15.8} };
+	\iftoggle{card7} { \fnOutputCard{#1}{#2}{#3}{3.2}{8.9}{3.2}{6.9} };
+	\iftoggle{card8} { \fnOutputCard{#1}{#2}{#3}{9.6}{8.9}{9.6}{6.9} };
+	\iftoggle{card9} { \fnOutputCard{#1}{#2}{#3}{16}{8.9}{16}{6.9} };
+	\togglefalse{card1}\togglefalse{card2}\togglefalse{card3}
+	\togglefalse{card4}\togglefalse{card5}\togglefalse{card6}
+	\togglefalse{card7}\togglefalse{card8}\togglefalse{card9}
+}
+\newcommand{\fnGenerateCard}[0] {
+	\iftoggle{teamGrey} { \renewcommand{\constColor}{grey} \fnFindCardPosition{gray}{gray}{GREY} };
+	\iftoggle{teamRed} { \renewcommand{\constColor}{red} \iftoggle{isCustomWin}{}{ \renewcommand{\winsection}{\redwinsection} } \fnFindCardPosition{red}{red}{RED} };
+	\iftoggle{teamBlue} { \renewcommand{\constColor}{blue} \fnFindCardPosition{blue}{blue}{BLUE} };
+	\iftoggle{teamGreen} { \renewcommand{\constColor}{green} \iftoggle{isCustomWin}{}{\renewcommand{\winsection}{\greenwinsection}} \fnFindCardPosition{ForestGreen}{ForestGreen}{GREEN} };
+	\togglefalse{teamGrey}\togglefalse{teamRed}\togglefalse{teamBlue}\togglefalse{teamGreen}\togglefalse{isCustomWin}
+}
+\newcommand{\fnGenerateLines}[0] {
+	\draw (0,0) -- (19.2,0);
+	\draw (0,8.9) -- (19.2,8.9);
+	\draw (0,17.8) -- (19.2,17.8);
+	\draw (0,26.7) -- (19.2,26.7);
+	\draw (0,0) -- (0,26.7);
+	\draw (6.4,0) -- (6.4,26.7);
+	\draw (12.8,0) -- (12.8,26.7);
+	\draw (19.2,0) -- (19.2,26.7);
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% DEFINE CARDS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% GENERIC WIZARD
+\newcommand{\cardGenericWizard} {
+	\renewcommand{\cardbody}{ {\Huge \titlecap{\constColor} Wizard} \seperatordescription You are on the \titlecap{\constColor} Team. }
+}
+% HONESTY WIZARD
+\newcommand{\cardHonestyWizard} {
+	\renewcommand{\cardbody}{
 		{\Huge Honesty Wizard}
 		\seperatorcondition
 		\condition{Truth}: Players with this condition must always verbally tell the truth. You can lie as long as it's not verbally.
-		\redwinsection
-	};
-	
-	% COY WIZARD (RED TEAM)
-	\node[teamshare, fill=red] at (9.6,26.7) {\HUGE RED};
-	\node[cardtext, text=red] at (9.6,24.7) {
+	}
+}
+% COY WIZARD
+\newcommand{\cardCoyWizard} {
+	\renewcommand{\cardbody}{
 		{\Huge Coy Wizard}
 		\seperatorcondition
 		\condition{Coy}: Players with this condition can only color share and never can show your full card.
-		\redwinsection
-	};
-	
-	% FIBBER WIZARD (RED TEAM)
-	\node[teamshare, fill=red] at (16,26.7) {\HUGE RED};
-	\node[cardtext, text=red] at (16,24.7) {
+	}
+}
+% FIBBER WIZARD
+\newcommand{\cardFibberWizard} {
+	\renewcommand{\cardbody}{
 		{\Huge Fibber Wizard}
 		\seperatorcondition
 		\condition{Fib}: Players with the this condition must always verbally lie. This means that you are permitted to tell the truth as long as it is not verbally.
-		\redwinsection
-	};
-	
-	% HONESTY WIZARD (GREEN TEAM)
-	\node[teamshare, fill=ForestGreen] at (3.2,17.8) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (3.2,15.8) {
-		{\Huge Honesty Wizard}
-		\seperatorcondition
-		\condition{Truth}: Players with this condition must always verbally tell the truth. You can lie as long as it's not verbally.
-		\greenwinsection
-	};
-	
-	% COY WIZARD (GREEN TEAM)
-	\node[teamshare, fill=ForestGreen] at (9.6,17.8) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (9.6,15.8) {
-		{\Huge Coy Wizard}
-		\seperatorcondition
-		\condition{Coy}: Players with this condition can only color share and never can show your full card.
-		\greenwinsection
-	};
-	
-	% FIBBER WIZARD (GREEN TEAM)
-	\node[teamshare, fill=ForestGreen] at (16,17.8) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (16,15.8) {
-		{\Huge Fibber Wizard}
-		\seperatorcondition
-		\condition{Fib}: Players with the “fib” condition must always verbally lie. This means that you are permitted to tell the truth as long as it is not verbally.
-		\greenwinsection
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (3.2,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (3.2,6.9) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (9.6,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (9.6,6.9) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (16,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (16,6.9) {
-		{\Huge TODO}
-		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	\draw (0,0) -- (19.2,0);
-	\draw (0,8.9) -- (19.2,8.9);
-	\draw (0,17.8) -- (19.2,17.8);
-	\draw (0,26.7) -- (19.2,26.7);
-	\draw (0,0) -- (0,26.7);
-	\draw (6.4,0) -- (6.4,26.7);
-	\draw (12.8,0) -- (12.8,26.7);
-	\draw (19.2,0) -- (19.2,26.7);
-
-\end{tikzpicture}
-\includepdf[pages={1}, angle=0]{cardsbackground.pdf}
-\pagebreak
-
-\noindent \begin{tikzpicture}[outer sep=0]
-
-	% SHY WIZARD (RED TEAM)
-	\node[teamshare, fill=red] (1) at (3.2,26.7) {\HUGE RED};
-	\node[cardtext, text=red] at (3.2,24.7) {
+	}
+}
+% SHY WIZARD
+\newcommand{\cardShyWizard} {
+	\renewcommand{\cardbody}{
 		{\Huge Shy Wizard}
 		\seperatorcondition
-		\condition{Shy}: You cannot show any part of your card to anyone.
-		\redwinsection
-	};
-	
-	% NEGOTIATOR WIZARD (RED TEAM)
-	\node[teamshare, fill=red] at (9.6,26.7) {\HUGE RED};
-	\node[cardtext, text=red] at (9.6,24.7) {
+		\condition{Shy}: Players with this condition cannot show any part of your card to anyone.
+	}
+}
+% NEGOTIATOR WIZARD
+\newcommand{\cardNegotiatorWizard} {
+	\renewcommand{\cardbody}{
 		{\Huge Negotiator Wizard}
 		\seperatorcondition
-		\condition{All-Or-Nothing}: You can only accept full card shares. You can never show just your color share.
-		\redwinsection
-	};
-	
-	% AUROR (RED TEAM)
-	\node[teamshare, fill=red] at (16,26.7) {\HUGE RED};
-	\node[cardtext, text=ForestGreen] at (16,24.7) {
-		{\Huge Auror}
+		\condition{All-Or-Nothing}: Players with this condition can only accept full card shares. You can never do color only.
+	}
+}
+% FOOLISH WIZARD
+\newcommand{\cardFoolish} {
+	\renewcommand{\cardbody}{
+		{\Huge Foolish Wizard}
 		\seperatorcondition
-		\condition{Spy}: You are actually on the \condition{Green Team}.
-		\greenwinsection
-	};
-	
-	% SHY WIZARD (GREEN TEAM)
-	\node[teamshare, fill=ForestGreen] at (3.2,17.8) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (3.2,15.8) {
-		{\Huge Shy Wizard}
+		\condition{All-Or-Nothing}: Players with this condition can only accept full card shares. You can never do color only.
+	}
+}
+% PARANOID WIZARD
+\newcommand{\cardParanoid} {
+	\renewcommand{\cardbody}{
+		{\Huge Paranoid Wizard}
 		\seperatorcondition
-		\condition{Shy}: You cannot show any part of your card to anyone.
-		\greenwinsection
-	};
-	
-	% NEGOTIATOR WIZARD (GREEN TEAM)
-	\node[teamshare, fill=ForestGreen] at (9.6,17.8) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (9.6,15.8) {
-		{\Huge Negotiator Wizard}
+		\condition{Paranoid}: Players with this condition may only card share. Moreover, they may only card share once per game.
+	}
+}
+% GIANT
+\newcommand{\cardGiant} {
+	\renewcommand{\cardbody}{
+		{\Huge \titlecap{\constColor} Giant}
+		\seperatordescription
+		Giants are known for their \\Resistance to certain \\ magical spells.
 		\seperatorcondition
-		\condition{All-Or-Nothing}: You can only accept full card shares. You can never show just your color share.
-		\greenwinsection
-	};
-	
-	% AUROR (GREEN TEAM)
-	\node[teamshare, fill=ForestGreen] at (16,17.8) {\HUGE GREEN};
-	\node[cardtext, text=red] at (16,15.8) {
-		{\Huge Auror}
-		\seperatorcondition
-		\condition{Spy}: You are actually on the \condition{Red Team}.
-		\redwinsection
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (3.2,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (3.2,6.9) {
-		{\Huge TODO}
+		\condition{Immune}: Players with this condition are immune to all powers and conditions without exception.
+	}
+}
+% MEDIWIZARD
+\newcommand{\cardMediwizard} {
+	\renewcommand{\cardbody}{
+		{\Huge Mediwizard}
+		\seperatordescription
+		You are the wizarding equivalent to a medic.
 		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (9.6,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (9.6,6.9) {
-		{\Huge TODO}
+		\condition{Medic}: Any player that card shares with you has all \condition{conditions} removed.
+		\\\vspace{0.25cm}
+		\tiny This does not make yourself immune to acquiring conditions.
+	}
+}
+% WIZARD SHY JINX (AKA CRIMINAL)
+\newcommand{\cardShyJinx} {
+	\renewcommand{\cardbody}{
+		{\Huge \titlecap{\constColor} Wizard}\\
+		{\Large casts Shy Jinx!}
 		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
-	
-	% TODO
-	\node[teamshare, fill=black] at (16,8.9) {\HUGE TODO};
-	\node[cardtext, text=black] at (16,6.9) {
-		{\Huge TODO}
+		\condition{Shy Jinx}: When you \condition{card share} with a player, that player gains the \condition{Shy} condition
+		\\\vspace{0.25cm}
+		\tiny Players that are \condition{shy} may not reveal any part of their card in any way.
+		\tiny (The shy condition is cancelled out by \\either of the \condition{foolish} or \condition{coy} conditions)
+	}
+}
+% WIZARD COY JINX (AKA CRIMINAL)
+\newcommand{\cardCoyJinx} {
+	\renewcommand{\cardbody}{
+		{\Huge \titlecap{\constColor} Wizard}\\
+		{\Large casts Coy Jinx!}
 		\seperatoraction
-		@TODO
-		\seperatorwin
-		@TODO
-	};
+		\condition{Coy Jinx}: When you \condition{card share} with a player, that player gains the \condition{Coy} condition
+		\\\vspace{0.25cm}
+		\tiny Players that are \condition{Coy} can only color share. Never full card share.
+		\tiny (The shy condition is cancelled out by the \condition{foolish} condition)
+	}
+}
+% TOTAL CARD JINX (AKA PROFESSOR)
+\newcommand{\cardNegotiatorJinx} {
+	\renewcommand{\cardbody}{
+		{\Huge \titlecap{\constColor} Wizard}\\
+		{\Large casts Total Card Jinx!}
+		\seperatoraction
+		\condition{Total Card Jinx}: When you \condition{card share} with a player, that player gains the \condition{Total Card} condition
+		\\\vspace{0.25cm}
+		\tiny Players that are \condition{Total Card} can only card share. Never color share.
+	}
+}
+% BULLY JINX (AKA BULLY)
+\newcommand{\cardBully} {
+	\renewcommand{\cardbody}{
+		{\Huge \titlecap{\constColor} Wizard}\\
+		{\Large casts Revealing Charm!}
+		\seperatoraction
+		\condition{Aparecium}: When you \condition{color share} with a player, you \condition{Private Reveal} instead. That player is forced to \condition{Private Reveal} their card too.
+	}
+}
+% LOVE POTION (AKA CUPID)
+\newcommand{\cardLovePotion} {
+	\renewcommand{\cardbody}{
+		{\Huge \titlecap{\constColor} Wizard}\\
+		{\Large uses a Love Potion!}
+		\seperatoraction
+		\small \condition{In Love}: Once per game, privately reveal to 2 players. Verbally say, "You're in love with each other." They gain the \condition{In Love} condition and replace their win objective with the following: \\
+		Be in the same room with the player with whom you are "in love" at the end of the game or they lose.
+	}
+}
+% HATE POTION (AKA ERIS)
+\newcommand{\cardHatePotion} {
+	\renewcommand{\cardbody}{
+		{\Huge \titlecap{\constColor} Wizard}\\
+		{\Large uses a Hate Potion!}
+		\seperatoraction
+		\small \condition{In Hate}: Once per game, privately reveal to 2 players. Verbally say, "You're in hate with each other." They gain the \condition{In Hate} condition and replace their win objective with the following: \\
+		Be in the opposite room with the player with whom you are "in hate" at the end of the game or they lose.
+	}
+}
+% SEER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+	\noindent \begin{tikzpicture}[outer sep=0]
 	
-	\draw (0,0) -- (19.2,0);
-	\draw (0,8.9) -- (19.2,8.9);
-	\draw (0,17.8) -- (19.2,17.8);
-	\draw (0,26.7) -- (19.2,26.7);
-	\draw (0,0) -- (0,26.7);
-	\draw (6.4,0) -- (6.4,26.7);
-	\draw (12.8,0) -- (12.8,26.7);
-	\draw (19.2,0) -- (19.2,26.7);
+	\toggletrue{card1} \cardHonestyWizard \toggletrue{teamGreen} \fnGenerateCard
+	\toggletrue{card2} \cardFibberWizard \toggletrue{teamGreen} \fnGenerateCard
+	% RED AUROR
+		\renewcommand{\cardbody}{
+			{\Huge Red Auror}
+			\seperatorcondition
+			\condition{Spy}: You are actually \\on the \condition{Red Team}.
+		}
+		\toggletrue{card3}
+		\renewcommand{\constColor}{red} \iftoggle{isCustomWin}{}{ \renewcommand{\winsection}{\redwinsection} } \fnFindCardPosition{ForestGreen}{red}{GREEN}
+	% END RED AUTOR
+	
+	\toggletrue{card4} \cardShyWizard \toggletrue{teamGreen} \fnGenerateCard
+	\toggletrue{card5} \cardCoyWizard \toggletrue{teamGreen} \fnGenerateCard
+	\toggletrue{card6} \cardNegotiatorWizard \toggletrue{teamGreen} \fnGenerateCard
+	
+	\toggletrue{card7} \cardFoolish \toggletrue{teamGreen} \fnGenerateCard
+	\toggletrue{card8} \cardParanoid \toggletrue{teamGreen} \fnGenerateCard
+	\toggletrue{card9} \cardGenericWizard \toggletrue{teamGreen} \fnGenerateCard
 
+	\fnGenerateLines
+	\end{tikzpicture}
+	\includepdf[pages={1}, angle=0]{cardsbackground.pdf}
+	\pagebreak
+	\noindent \begin{tikzpicture}[outer sep=0]
 
-\end{tikzpicture}
-\includepdf[pages={1}, angle=90]{cardsbackground.pdf}
+	\toggletrue{card1} \cardHonestyWizard \toggletrue{teamRed} \fnGenerateCard
+	\toggletrue{card2} \cardFibberWizard \toggletrue{teamRed} \fnGenerateCard
+	% GREEN AUROR
+	\renewcommand{\cardbody}{
+		{\Huge Green Auror}
+		\seperatorcondition
+		\condition{Spy}: You are actually \\on the \condition{Green Team}.
+	}
+	\toggletrue{card3}
+	\renewcommand{\constColor}{green} \iftoggle{isCustomWin}{}{ \renewcommand{\winsection}{\greenwinsection} } \fnFindCardPosition{red}{ForestGreen}{RED}
+	% END GREEN AUTOR
+	
+	\toggletrue{card4} \cardShyWizard \toggletrue{teamRed} \fnGenerateCard
+	\toggletrue{card5} \cardCoyWizard \toggletrue{teamRed} \fnGenerateCard
+	\toggletrue{card6} \cardNegotiatorWizard \toggletrue{teamRed} \fnGenerateCard
+	
+	\toggletrue{card7} \cardFoolish \toggletrue{teamRed} \fnGenerateCard
+	\toggletrue{card8} \cardParanoid \toggletrue{teamRed} \fnGenerateCard
+	\toggletrue{card9} \cardGenericWizard \toggletrue{teamRed} \fnGenerateCard
 
-
-
-
-
-
-
-
+	\fnGenerateLines
+	\end{tikzpicture}
+	\includepdf[pages={1}, angle=0]{cardsbackground.pdf}
+	\pagebreak
+	\noindent \begin{tikzpicture}[outer sep=0]
+	
+	\toggletrue{card1} \cardShyJinx \toggletrue{teamGreen} \fnGenerateCard
+	\toggletrue{card2} \cardBully \toggletrue{teamGreen} \fnGenerateCard
+	\toggletrue{card3} \cardNegotiatorJinx \toggletrue{teamGreen} \fnGenerateCard
+	
+	\toggletrue{card4} \cardLovePotion \toggletrue{teamGreen} \fnGenerateCard
+	\toggletrue{card5} \cardHatePotion \toggletrue{teamGreen} \fnGenerateCard
+	\toggletrue{card6} \cardCoyJinx \toggletrue{teamGreen} \fnGenerateCard
+	
+	\toggletrue{card7} \cardGiant \toggletrue{teamGreen} \fnGenerateCard
+	\toggletrue{card8} \cardMediwizard \toggletrue{teamGreen} \fnGenerateCard
+	\toggletrue{card9} \cardGenericWizard \toggletrue{teamGreen} \fnGenerateCard
+	
+	\fnGenerateLines
+	\end{tikzpicture}
+	\includepdf[pages={1}, angle=0]{cardsbackground.pdf}
+	\pagebreak
+	\noindent \begin{tikzpicture}[outer sep=0]
+	
+	\toggletrue{card1} \cardShyJinx \toggletrue{teamRed} \fnGenerateCard
+	\toggletrue{card2} \cardBully \toggletrue{teamRed} \fnGenerateCard
+	\toggletrue{card3} \cardNegotiatorJinx \toggletrue{teamRed} \fnGenerateCard
+	
+	\toggletrue{card4} \cardLovePotion \toggletrue{teamRed} \fnGenerateCard
+	\toggletrue{card5} \cardHatePotion \toggletrue{teamRed} \fnGenerateCard
+	\toggletrue{card6} \cardCoyJinx \toggletrue{teamRed} \fnGenerateCard
+	
+	\toggletrue{card7} \cardGiant \toggletrue{teamRed} \fnGenerateCard
+	\toggletrue{card8} \cardMediwizard \toggletrue{teamRed} \fnGenerateCard
+	\toggletrue{card9} \cardGenericWizard \toggletrue{teamRed} \fnGenerateCard
+	
+	\fnGenerateLines
+	\end{tikzpicture}
+	\includepdf[pages={1}, angle=0]{cardsbackground.pdf}
 \end{document}

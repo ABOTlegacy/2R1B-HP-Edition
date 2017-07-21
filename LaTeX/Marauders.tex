@@ -9,6 +9,8 @@
 \usepackage{pdfpages}
 \usepackage[sfdefault]{roboto}
 \usepackage{color}
+\usepackage{etoolbox}
+\usepackage{titlecaps}
 
 % Styles
 \tikzstyle{teamshare} = [below, text width=5.4cm, inner sep = 0.5cm, text=white, align=center]
@@ -23,117 +25,65 @@
 \newcommand{\character}[1]{\textbf{#1}}
 \newdimen\titlespacing
 \titlespacing=0.15cm
-
-% Define Seperators
+%%%
+%%% SEPARATORS
+%%%
 \newcommand{\seperator}[1]{\\ \vspace{\titlespacing} \hrulefill {} \tiny \bfseries #1 \normalfont \normalsize \hrulefill \\ \vspace{\titlespacing}}
 \newcommand{\seperatoraction}{\seperator{POWER}}
 \newcommand{\seperatordescription}{\seperator{DESCRIPTION}}
 \newcommand{\seperatorcondition}{\seperator{CONDITION}}
 \newcommand{\seperatorwin}{\seperator{HOW TO WIN}}
-\newcommand{\redwinsection}{
-	\seperatorwin
-	You win if \character{Harry Potter} does not gain the \condition{dead} condition due to \character{Voldemort}.
-}
-\newcommand{\greenwinsection}{
-	\seperatorwin
-	\small You win if \character{Harry Potter} gains the \condition{dead} condition due to the \character{Voldemort}.
-}
+\newcommand{\redwinsection}{\seperatorwin You win if \character{Harry Potter} avoids \\ the \condition{Avada Kadavra} curse.}
+\newcommand{\greenwinsection}{\seperatorwin \small You win if \character{Harry Potter} gets hit by the \condition{Avada Kadavra} curse.}
+\newcommand{\winsection}{}
 \newcommand{\titlefrom}[1]{\\ \tiny > from #1 <\normalsize}
-
-% Begin Document
-\begin{document}
-\noindent \begin{tikzpicture}[outer sep=0]
-
-	% PROFESSOR LUPIN
-	\node[teamshare, fill=gray] (1) at (3.2,26.7) {\HUGE GREY};
-	\node[cardtext, text=gray] at (3.2,24.7) {
-		{\Huge Remus Lupin}
-		\seperatordescription
-		You are Mooney, one of the four \condition{Marauders}
-		\seperatorcondition
-		\condition{Werewolf}: When the game ends, you turn into a Werewolf.
-		\seperatorwin
-		You win if you end the game in the same room as all 4 \condition{Marauders}.
+%%%
+%%% Variables for Card Generation
+%%%
+\newcommand{\cardbody}{}\newcommand{\constColor}{}
+\newtoggle{isCustomWin}
+\newtoggle{card1}\newtoggle{card2}\newtoggle{card3}
+\newtoggle{card4}\newtoggle{card5}\newtoggle{card6}
+\newtoggle{card7}\newtoggle{card8}\newtoggle{card9}
+\togglefalse{card1}\togglefalse{card2}\togglefalse{card3}
+\togglefalse{card4}\togglefalse{card5}\togglefalse{card6}
+\togglefalse{card7}\togglefalse{card8}\togglefalse{card9}
+\newtoggle{teamGrey}\newtoggle{teamRed}\newtoggle{teamBlue}\newtoggle{teamGreen}
+\togglefalse{teamGrey}\togglefalse{teamRed}\togglefalse{teamBlue}\togglefalse{teamGreen}
+%%%
+%%% Card Generation Functions
+%%%
+\newcommand{\fnOutputCard}[7] {
+	% Args { FillColor, TextColor, Text, TitlePositionX, TitlePositionY, CardTextX, CardTextY }
+	\node[teamshare, fill=#1] (1) at (#4,#5) {\HUGE #3};
+	\node[cardtext, text=#2] at (#6,#7) {
+		\cardbody
+		\winsection
 	};
-	
-	% SIRIUS BLACK
-	\node[teamshare, fill=gray] at (9.6,26.7) {\HUGE GREY};
-	\node[cardtext, text=gray] at (9.6,24.7) {
-		{\Huge Sirius Black}
-		\seperatordescription
-		You are Padfoot, one of the four \condition{Marauders}
-		\seperatorwin
-		You win if the \character{Dementor} does not capture your card at the end of the game.
-	};
-	
-	% JAMES POTTER
-	\node[teamshare, fill=gray] at (16,26.7) {\HUGE GREY};
-	\node[cardtext, text=gray] at (16,24.7) {
-		{\Huge James Potter}
-		\seperatordescription
-		You are Prongs, one of the four \condition{Marauders}. You are also the father of \character{Harry Potter}
-		\seperatorwin
-		You win if you end the game in the same room as \character{Harry Potter}.
-	};
-	
-	% PETER PETTEGREW
-	\node[teamshare, fill=gray] at (3.2,17.8) {\HUGE GREY};
-	\node[cardtext, text=gray] at (3.2,15.8) {
-		{\Huge Peter Petegrew}
-		\seperatordescription
-		You are Wormtail, one of the four \condition{Marauders}. You are also deeply scared of \character{Voldemort}
-		\seperatorwin
-		You win if you are not in the same room as \character{Voledemort} at the end of the game.
-	};
-	
-	% DEMENTOR
-	\node[teamshare, fill=gray] at (9.6,17.8) {\HUGE GREY};
-	\node[cardtext, text=gray] at (9.6,15.8) {
-		{\Huge Dementor}
-		\seperatordescription
-		You are a \condition{Magical Creature} who guards Azkaban and feeds on human happiness.
-		\seperatoraction
-		\condition{Dementor's Kiss}: Once during the game, you may reveal your card to a target player. Their \character{card} is \character{captured}.
-		\seperatorwin
-		You win if you \character{capture} the escapee \character{Sirius Black}
-	};
-	
-	% TODO
-	\node[teamshare, fill=red] at (16,17.8) {\HUGE RED};
-	\node[cardtext, text=red] at (16,15.8) {
-		{\Huge Red Team}
-		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
-	};
-	
-	% TODO
-	\node[teamshare, fill=ForestGreen] at (3.2,8.9) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (3.2,6.9) {
-		{\Huge Green Team}
-		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
-	};
-	
-	% TODO
-	\node[teamshare, fill=ForestGreen] at (9.6,8.9) {\HUGE GREEN};
-	\node[cardtext, text=ForestGreen] at (9.6,6.9) {
-		{\Huge Green Team}
-		\seperatordescription
-		You are on the Green Team.
-		\greenwinsection
-	};
-	
-	% TODO
-	\node[teamshare, fill=red] at (16,8.9) {\HUGE RED};
-	\node[cardtext, text=red] at (16,6.9) {
-		{\Huge Red Team}
-		\seperatordescription
-		You are on the Red Team.
-		\redwinsection
-	};
-	
+}
+\newcommand{\fnFindCardPosition}[3] {
+	% Args { FillColor, TextColor, Text }
+	\iftoggle{card1} { \fnOutputCard{#1}{#2}{#3}{3.2}{26.7}{3.2}{24.7} };
+	\iftoggle{card2} { \fnOutputCard{#1}{#2}{#3}{9.6}{26.7}{9.6}{24.7} };
+	\iftoggle{card3} { \fnOutputCard{#1}{#2}{#3}{16}{26.7}{16}{24.7} };
+	\iftoggle{card4} { \fnOutputCard{#1}{#2}{#3}{3.2}{17.8}{3.2}{15.8} };
+	\iftoggle{card5} { \fnOutputCard{#1}{#2}{#3}{9.6}{17.8}{9.6}{15.8} };
+	\iftoggle{card6} { \fnOutputCard{#1}{#2}{#3}{16}{17.8}{16}{15.8} };
+	\iftoggle{card7} { \fnOutputCard{#1}{#2}{#3}{3.2}{8.9}{3.2}{6.9} };
+	\iftoggle{card8} { \fnOutputCard{#1}{#2}{#3}{9.6}{8.9}{9.6}{6.9} };
+	\iftoggle{card9} { \fnOutputCard{#1}{#2}{#3}{16}{8.9}{16}{6.9} };
+	\togglefalse{card1}\togglefalse{card2}\togglefalse{card3}
+	\togglefalse{card4}\togglefalse{card5}\togglefalse{card6}
+	\togglefalse{card7}\togglefalse{card8}\togglefalse{card9}
+}
+\newcommand{\fnGenerateCard}[0] {
+	\iftoggle{teamGrey} { \renewcommand{\constColor}{grey} \fnFindCardPosition{gray}{gray}{GREY} };
+	\iftoggle{teamRed} { \renewcommand{\constColor}{red} \iftoggle{isCustomWin}{}{ \renewcommand{\winsection}{\redwinsection} } \fnFindCardPosition{red}{red}{RED} };
+	\iftoggle{teamBlue} { \renewcommand{\constColor}{blue} \fnFindCardPosition{blue}{blue}{BLUE} };
+	\iftoggle{teamGreen} { \renewcommand{\constColor}{green} \iftoggle{isCustomWin}{}{\renewcommand{\winsection}{\greenwinsection}} \fnFindCardPosition{ForestGreen}{ForestGreen}{GREEN} };
+	\togglefalse{teamGrey}\togglefalse{teamRed}\togglefalse{teamBlue}\togglefalse{teamGreen}\togglefalse{isCustomWin}
+}
+\newcommand{\fnGenerateLines}[0] {
 	\draw (0,0) -- (19.2,0);
 	\draw (0,8.9) -- (19.2,8.9);
 	\draw (0,17.8) -- (19.2,17.8);
@@ -142,7 +92,97 @@
 	\draw (6.4,0) -- (6.4,26.7);
 	\draw (12.8,0) -- (12.8,26.7);
 	\draw (19.2,0) -- (19.2,26.7);
-
-\end{tikzpicture}
-\includepdf[pages={1}, angle=0]{cardsbackground.pdf}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% DEFINE CARDS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROFESSOR LUPIN
+\newcommand{\cardProfessorLupin} {
+	\renewcommand{\cardbody}{
+		{\Huge Remus Lupin}
+		\seperatordescription
+		You are Mooney, one of the four \condition{Marauders}
+		\seperatorcondition
+		\condition{Werewolf}: When the game ends, you turn into a Werewolf.
+	}
+	\renewcommand{\winsection}{ \seperatorwin You win if you end the game in the same room as all 4 \condition{Marauders}. }
+	\toggletrue{teamGrey}
+}
+% SIRIUS BLACK
+\newcommand{\cardSiriusBlack} {
+	\renewcommand{\cardbody}{
+		{\Huge Sirius Black}
+		\seperatordescription
+		You are Padfoot, one of the four \condition{Marauders}
+	}
+	\renewcommand{\winsection}{ \seperatorwin You win if the \character{Dementor} does not capture your card at the end of the game. }
+	\toggletrue{teamGrey}
+}
+% JAMES POTTER
+\newcommand{\cardJamesPotter} {
+	\renewcommand{\cardbody}{
+		{\Huge James Potter}
+		\seperatordescription
+		You are Prongs, one of the four \condition{Marauders}. You are also the father of \character{Harry Potter}
+	}
+	\renewcommand{\winsection}{ \seperatorwin You win if you end the game in the same room as \character{Harry Potter}. }
+	\toggletrue{teamGrey}
+}
+% PETER PETTEGREW
+\newcommand{\cardPeterPettegrew} {
+	\renewcommand{\cardbody}{
+		{\Huge Peter Petegrew}
+		\seperatordescription
+		You are Wormtail, one of the four \condition{Marauders}. You are also deeply scared of \character{Voldemort}
+	}
+	\renewcommand{\winsection}{ \seperatorwin You win if you are not in the same room as \character{Voldemort} at the end of the game. }
+	\toggletrue{teamGrey}
+}
+% DEMENTOR
+\newcommand{\cardDementor} {
+	\renewcommand{\cardbody}{
+		{\Huge Dementor}
+		\seperatordescription
+		You are a \condition{Magical Creature} who guards Azkaban and feeds on human happiness.
+		\seperatoraction
+		\condition{Dementor's Kiss}: Once during the game, you may reveal your card to a target player. Their \character{card} is \character{captured}.
+	}
+	\renewcommand{\winsection}{ \seperatorwin You win if you \character{capture} the escapee \character{Sirius Black}. }
+	\toggletrue{teamGrey}
+}
+% GENERIC WIZARD
+\newcommand{\cardGenericWizard} {
+	\renewcommand{\cardbody}{ {\Huge \titlecap{\constColor} Wizard} \seperatordescription You are on the \titlecap{\constColor} Team. }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+	\noindent \begin{tikzpicture}[outer sep=0]
+	% PROFESSOR LUPIN
+	\toggletrue{card1} \cardProfessorLupin \fnGenerateCard
+	% SIRIUS BLACK
+	\toggletrue{card2} \cardSiriusBlack \fnGenerateCard
+	% JAMES POTTER
+	\toggletrue{card3} \cardJamesPotter \toggletrue{teamGreen} \fnGenerateCard
+	% PETER PETTEGREW
+	\toggletrue{card4} \cardPeterPettegrew \toggletrue{teamGreen} \fnGenerateCard
+	% DEMENTOR
+	\toggletrue{card5} \cardDementor \toggletrue{teamGreen} \fnGenerateCard
+	% GREEN WIZARD
+	\toggletrue{card6} \cardGenericWizard \toggletrue{teamGreen} \fnGenerateCard
+	% GREEN WIZARD
+	\toggletrue{card7} \cardGenericWizard \toggletrue{teamGreen} \fnGenerateCard
+	% RED WIZARD
+	\toggletrue{card8} \cardGenericWizard \toggletrue{teamRed} \fnGenerateCard
+	% RED WIZARD
+	\toggletrue{card9} \cardGenericWizard \toggletrue{teamRed} \fnGenerateCard
+	% LINES
+	\fnGenerateLines
+	\end{tikzpicture}
+	\includepdf[pages={1}, angle=0]{cardsbackground.pdf}
 \end{document}
